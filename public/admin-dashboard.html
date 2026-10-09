@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OMNIX — Administrator Intelligence Console</title>
+
+  <!-- Bootstrap 5.3 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom OMNIX Theme -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-omnix">
+    <div class="container">
+      <a class="navbar-brand-omnix" href="admin-dashboard.html">
+        <div class="brand-badge bg-dark"><i class="fa-solid fa-shield-halved"></i></div>
+        <span>OMN<span class="text-primary">IX</span> <span class="badge bg-dark rounded-pill ms-1 fs-6">ADMIN</span></span>
+      </a>
+
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="adminNav">
+        <ul class="navbar-nav ms-auto align-items-center gap-2">
+          <li class="nav-item">
+            <a class="nav-link-custom active" href="admin-dashboard.html">
+              <i class="fa-solid fa-chart-pie me-1"></i> Analytics & Tracker
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link-custom" href="question-manager.html">
+              <i class="fa-solid fa-list-check me-1"></i> Question Bank CRUD
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link-custom" href="user-dashboard.html">
+              <i class="fa-solid fa-graduation-cap me-1"></i> Candidate View
+            </a>
+          </li>
+          
+          <li class="nav-item dropdown ms-lg-3">
+            <a class="nav-link dropdown-toggle d-flex align-items-center text-heading fw-bold" href="#" role="button" data-bs-toggle="dropdown">
+              <div class="rounded-circle bg-dark text-white d-flex align-items-center justify-content-center me-2" style="width: 36px; height: 36px;">
+                <i class="fa-solid fa-user-shield"></i>
+              </div>
+              <span id="nav-user-name">Administrator</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow-md border-0 rounded-3">
+              <li><a class="dropdown-item py-2 text-danger btn-logout" href="#"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Sign Out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Admin Header Bar -->
+  <header class="py-4 bg-white border-bottom">
+    <div class="container">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <span class="badge bg-dark text-white rounded-pill px-3 py-1 fw-bold">Admin Portal</span>
+            <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1 fw-semibold">
+              <i class="fa-solid fa-circle text-success me-1" style="font-size: 0.6rem;"></i> Live System Active
+            </span>
+          </div>
+          <h2 class="fw-bold mb-0">Platform Overview & Attempt Intelligence</h2>
+          <p class="text-muted small mb-0">Monitor attempt quotas, candidate performance, and evaluation logs</p>
+        </div>
+
+        <div class="d-flex gap-2">
+          <a href="question-manager.html" class="btn btn-omnix-primary btn-sm">
+            <i class="fa-solid fa-plus me-1"></i> Add / Edit Questions
+          </a>
+          <button class="btn btn-outline-danger btn-sm" id="btn-reset-db">
+            <i class="fa-solid fa-rotate-left me-1"></i> Reset Seed Data
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container py-5 flex-grow-1">
+
+    <!-- 1. Platform Key Metrics Grid -->
+    <div class="row g-3 mb-5">
+      <div class="col-xl-3 col-md-6">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon stat-icon-purple">
+            <i class="fa-solid fa-folder-tree"></i>
+          </div>
+          <div>
+            <div class="admin-stat-val" id="stat-total-categories">--</div>
+            <div class="admin-stat-label">Total Domains</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon stat-icon-blue">
+            <i class="fa-solid fa-circle-question"></i>
+          </div>
+          <div>
+            <div class="admin-stat-val" id="stat-total-questions">--</div>
+            <div class="admin-stat-label">Active Questions</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon stat-icon-green">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div>
+            <div class="admin-stat-val" id="stat-registered-users">--</div>
+            <div class="admin-stat-label">Registered Students</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-md-6">
+        <div class="admin-stat-card">
+          <div class="admin-stat-icon stat-icon-amber">
+            <i class="fa-solid fa-clipboard-check"></i>
+          </div>
+          <div>
+            <div class="admin-stat-val" id="stat-total-attempts">--</div>
+            <div class="admin-stat-label">Attempts Evaluated</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Submission Tracker: Comparing Latest Attempt vs Previous Attempt -->
+    <section class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h4 class="fw-bold mb-0">Candidate Submission Tracker</h4>
+          <span class="small text-muted">Tracking individual attempt budgets: <strong>Latest Attempt</strong> vs. <strong>Previous Attempt</strong> comparison</span>
+        </div>
+        <span class="badge bg-secondary-subtle text-secondary border px-3 py-1.5 rounded-pill fw-semibold">
+          <i class="fa-solid fa-filter me-1"></i> Quota Engine Active (Max 2 Attempts)
+        </span>
+      </div>
+
+      <div class="omnix-card p-0">
+        <div class="table-responsive">
+          <table class="table table-omnix mb-0">
+            <thead>
+              <tr>
+                <th>Candidate</th>
+                <th>Quiz Domain</th>
+                <th>Attempt Quota</th>
+                <th>Previous Attempt</th>
+                <th>Latest Attempt</th>
+                <th>Score Delta</th>
+                <th class="text-end">Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-attempts-table-body">
+              <tr>
+                <td colspan="7" class="text-center py-4 text-muted">Loading submission logs...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Registered Users & Domain Performance Tables -->
+    <div class="row g-4">
+      <!-- Registered Users Table -->
+      <div class="col-lg-7">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold mb-0">Registered Candidates</h5>
+          <span class="small text-muted">Candidate directory & assessment frequency</span>
+        </div>
+
+        <div class="omnix-card p-0">
+          <div class="table-responsive">
+            <table class="table table-omnix mb-0">
+              <thead>
+                <tr>
+                  <th>User Details</th>
+                  <th>Role</th>
+                  <th>Attempts</th>
+                  <th>Avg Score</th>
+                  <th>Date Joined</th>
+                </tr>
+              </thead>
+              <tbody id="admin-users-table-body">
+                <tr>
+                  <td colspan="5" class="text-center py-4 text-muted">Loading registered users...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Performance Table -->
+      <div class="col-lg-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold mb-0">Domain Performance</h5>
+          <span class="small text-muted">Average score per topic</span>
+        </div>
+
+        <div class="omnix-card p-0">
+          <div class="table-responsive">
+            <table class="table table-omnix mb-0">
+              <thead>
+                <tr>
+                  <th>Domain</th>
+                  <th>Questions</th>
+                  <th>Submissions</th>
+                  <th>Avg Score</th>
+                </tr>
+              </thead>
+              <tbody id="admin-category-stats-body">
+                <tr>
+                  <td colspan="4" class="text-center py-4 text-muted">Loading category stats...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================= ATTEMPT DETAIL INSPECTION MODAL ================= -->
+  <div class="modal fade" id="attemptDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content modal-content-omnix">
+        <div class="modal-header modal-header-omnix">
+          <div>
+            <h5 class="modal-title fw-bold text-heading" id="modalAttemptUserTitle">Candidate Submission Audit</h5>
+            <span class="small text-muted">Full answer audit trail with correctness and explanation</span>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body modal-body-omnix" id="modalAttemptAnswersList">
+          <!-- Dynamically populated answer review items -->
+        </div>
+        <div class="modal-footer modal-footer-omnix">
+          <button type="button" class="btn btn-omnix-outline" data-bs-dismiss="modal">Close Audit View</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer-omnix">
+    <div class="container text-center text-muted small">
+      OMNIX Administrator Intelligence Console &copy; 2026. Secure RBAC session active.
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

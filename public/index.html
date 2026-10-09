@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OMNIX — Master Every Domain | Interactive Online Quiz Platform</title>
+  
+  <!-- Bootstrap 5.3 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom OMNIX Theme -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-omnix">
+    <div class="container">
+      <a class="navbar-brand-omnix" href="index.html">
+        <div class="brand-badge"><i class="fa-solid fa-bolt"></i></div>
+        <span>OMN<span class="brand-text-accent">IX</span></span>
+      </a>
+
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#omnixNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="omnixNav">
+        <ul class="navbar-nav ms-auto align-items-center gap-2">
+          <li class="nav-item">
+            <a class="nav-link-custom active" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link-custom" href="#features">Platform Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link-custom" href="#domains">Domains</a>
+          </li>
+          
+          <!-- Guest Container -->
+          <li class="nav-item d-flex gap-2 ms-lg-3" id="nav-guest-container">
+            <button class="btn btn-omnix-outline btn-sm" data-bs-toggle="modal" data-bs-target="#userAuthModal">
+              <i class="fa-solid fa-user me-1"></i> Student Portal
+            </button>
+            <button class="btn btn-omnix-primary btn-sm" data-bs-toggle="modal" data-bs-target="#adminAuthModal">
+              <i class="fa-solid fa-shield-halved me-1"></i> Admin Portal
+            </button>
+          </li>
+
+          <!-- Logged In User Container -->
+          <li class="nav-item dropdown d-none ms-lg-3" id="nav-user-container">
+            <a class="nav-link dropdown-toggle d-flex align-items-center text-heading fw-bold" href="#" role="button" data-bs-toggle="dropdown">
+              <div class="rounded-circle bg-primary-light text-primary d-flex align-items-center justify-content-center me-2" style="width: 34px; height: 34px;">
+                <i class="fa-solid fa-user"></i>
+              </div>
+              <span id="nav-user-name">User</span>
+              <span id="nav-user-role" class="badge">ROLE</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow-md border-0 rounded-3">
+              <li><a class="dropdown-item py-2" href="user-dashboard.html"><i class="fa-solid fa-grid-2 me-2 text-primary"></i>My Quiz Dashboard</a></li>
+              <li class="admin-nav-item d-none"><a class="dropdown-item py-2" href="admin-dashboard.html"><i class="fa-solid fa-chart-line me-2 text-info"></i>Admin Analytics</a></li>
+              <li class="admin-nav-item d-none"><a class="dropdown-item py-2" href="question-manager.html"><i class="fa-solid fa-list-check me-2 text-warning"></i>Manage Questions</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item py-2 text-danger btn-logout" href="#"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Sign Out</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section text-center">
+    <div class="container">
+      <div class="hero-tag">
+        <i class="fa-solid fa-sparkles"></i> Next-Generation Skill Assessment Engine
+      </div>
+      <h1 class="hero-title">
+        Master Every Domain.<br>
+        <span class="brand-text-accent">Test Your Mastery with OMNIX.</span>
+      </h1>
+      <p class="hero-lead">
+        A precision-engineered assessment platform with strict attempt restriction, instant scoring analytics, and comprehensive answer rationales across engineering, logic, and core computing.
+      </p>
+
+      <!-- Dual Gateway Action Cards -->
+      <div class="row g-4 justify-content-center max-w-4xl mx-auto mb-4" style="max-width: 900px;">
+        <!-- User Gateway -->
+        <div class="col-md-6">
+          <div class="hero-gateway-card text-start">
+            <div class="gateway-icon gateway-user">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <h4 class="fw-bold mb-2">Student & Candidate Portal</h4>
+            <p class="text-muted small mb-4">
+              Explore 6+ specialized quiz tracks, manage your strict 2-attempt budget, and access detailed rationale reviews.
+            </p>
+            <div class="d-flex gap-2">
+              <button class="btn btn-omnix-primary w-100" data-bs-toggle="modal" data-bs-target="#userAuthModal">
+                <i class="fa-solid fa-right-to-bracket me-1"></i> Sign In / Register as User
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Gateway -->
+        <div class="col-md-6">
+          <div class="hero-gateway-card text-start">
+            <div class="gateway-icon gateway-admin">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h4 class="fw-bold mb-2">Admin Control Center</h4>
+            <p class="text-muted small mb-4">
+              Monitor candidate attempt comparisons (Latest vs Previous), manage categories, and curate question banks.
+            </p>
+            <div class="d-flex gap-2">
+              <button class="btn btn-omnix-outline w-100" data-bs-toggle="modal" data-bs-target="#adminAuthModal">
+                <i class="fa-solid fa-lock me-1"></i> Admin Portal Access
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Live Platform Stats -->
+  <section class="py-4 border-bottom bg-white">
+    <div class="container">
+      <div class="row text-center g-3">
+        <div class="col-6 col-md-3">
+          <div class="fw-bold fs-3 text-heading">6+</div>
+          <div class="text-muted small fw-semibold text-uppercase">Active Domains</div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="fw-bold fs-3 text-primary">30+</div>
+          <div class="text-muted small fw-semibold text-uppercase">Curated Questions</div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="fw-bold fs-3 text-success">2 Max</div>
+          <div class="text-muted small fw-semibold text-uppercase">Strict Attempts / Quiz</div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="fw-bold fs-3 text-heading">100%</div>
+          <div class="text-muted small fw-semibold text-uppercase">Instant Explanations</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Highlights -->
+  <section class="py-5" id="features">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h6 class="text-primary fw-bold text-uppercase" style="letter-spacing: 0.08em;">Built For High Performance</h6>
+        <h2 class="fw-bold">Platform Capabilities & Rules</h2>
+        <p class="text-muted max-w-md mx-auto" style="max-width: 600px;">
+          Engineered for fair, rigorous evaluations with role-based segregation and anti-cheat measures.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon-circle">
+              <i class="fa-solid fa-shield-cat"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Strict 2-Attempt Engine</h5>
+            <p class="text-muted small mb-0">
+              Every candidate is restricted to a hard limit of two attempts per topic. After the second submission, the quiz is permanently locked with full historical score tracking.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon-circle">
+              <i class="fa-solid fa-stopwatch"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Distraction-Free Quiz Room</h5>
+            <p class="text-muted small mb-0">
+              Clean keyboard-friendly interface (keys 1-4, A-D), live countdown timer with auto-submission, question palette, and submit confirmation modal.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon-circle">
+              <i class="fa-solid fa-magnifying-glass-chart"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Comprehensive Answer Review</h5>
+            <p class="text-muted small mb-0">
+              Post-quiz scorecard highlights chosen options, correct answers in soft green, wrong answers in soft red, paired with thorough conceptual explanations.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon-circle">
+              <i class="fa-solid fa-users-gear"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Role-Based Ecosystem (RBAC)</h5>
+            <p class="text-muted small mb-0">
+              Dedicated boundaries for candidates (`ROLE_USER`) and administrators (`ROLE_ADMIN`) with route protection and token-authenticated requests.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon-circle">
+              <i class="fa-solid fa-chart-line-up"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Attempt Delta Tracking</h5>
+            <p class="text-muted small mb-0">
+              Admin console captures and compares **Latest Attempt** vs **Previous Attempt** timestamps, scores, and calculated performance improvement deltas.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon-circle">
+              <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Dynamic Question Bank CRUD</h5>
+            <p class="text-muted small mb-0">
+              Administrators can add, update, and manage categories and 4-option questions with real-time JSON storage and instant platform reflection.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Domains Preview -->
+  <section class="py-5 bg-white border-top border-bottom" id="domains">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+          <h6 class="text-primary fw-bold text-uppercase" style="letter-spacing: 0.08em;">Curated Tracks</h6>
+          <h2 class="fw-bold mb-0">Explore Available Domains</h2>
+        </div>
+        <button class="btn btn-omnix-primary btn-sm" data-bs-toggle="modal" data-bs-target="#userAuthModal">
+          View All Domains <i class="fa-solid fa-arrow-right ms-1"></i>
+        </button>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="p-4 border rounded-3 bg-light">
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <div class="rounded-3 bg-white p-2.5 shadow-xs text-primary"><i class="fa-solid fa-mug-hot fs-4"></i></div>
+              <h5 class="fw-bold mb-0">Java Programming</h5>
+            </div>
+            <p class="text-muted small mb-0">JVM memory structure, OOP inheritance, Comparable interfaces, and G1 Garbage Collection.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="p-4 border rounded-3 bg-light">
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <div class="rounded-3 bg-white p-2.5 shadow-xs text-primary"><i class="fa-solid fa-code fs-4"></i></div>
+              <h5 class="fw-bold mb-0">Web Development</h5>
+            </div>
+            <p class="text-muted small mb-0">CSS specificity, Microtask vs Macrotask Event Loops, Fetch API, and Box Model.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="p-4 border rounded-3 bg-light">
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <div class="rounded-3 bg-white p-2.5 shadow-xs text-primary"><i class="fa-brands fa-python fs-4"></i></div>
+              <h5 class="fw-bold mb-0">Python</h5>
+            </div>
+            <p class="text-muted small mb-0">Global Interpreter Lock (GIL), List comprehensions, generators, and immutability.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-omnix">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+          <div class="d-flex align-items-center gap-2 justify-content-center justify-content-md-start mb-1">
+            <div class="brand-badge" style="width: 28px; height: 28px; font-size: 0.9rem;"><i class="fa-solid fa-bolt"></i></div>
+            <span class="fw-bold text-heading">OMNIX Platform</span>
+          </div>
+          <p class="text-muted small mb-0">Interactive Online Quiz Platform with Dual Ecosystem Architecture.</p>
+        </div>
+        <div class="col-md-6 text-center text-md-end text-muted small">
+          <span>Demo Credentials: <strong>user@omnix.com</strong> / <strong>user123</strong> | Admin: <strong>admin@omnix.com</strong> / <strong>admin123</strong></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- User Authentication Modal (Tabs for Login & Register) -->
+  <div class="modal fade" id="userAuthModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-content-omnix">
+        <div class="modal-header modal-header-omnix">
+          <ul class="nav nav-pills w-100 justify-content-center" id="userAuthTabs" role="tablist">
+            <li class="nav-item flex-fill text-center" role="presentation">
+              <button class="nav-link active w-100 fw-bold" id="user-login-tab" data-bs-toggle="pill" data-bs-target="#user-login-pane" type="button">Sign In as Student</button>
+            </li>
+            <li class="nav-item flex-fill text-center" role="presentation">
+              <button class="nav-link w-100 fw-bold" id="user-reg-tab" data-bs-toggle="pill" data-bs-target="#user-reg-pane" type="button">Create Account</button>
+            </li>
+          </ul>
+        </div>
+        <div class="modal-body modal-body-omnix">
+          <div class="tab-content" id="userAuthTabContent">
+            
+            <!-- User Login Tab -->
+            <div class="tab-pane fade show active" id="user-login-pane" role="tabpanel">
+              <form id="user-login-form">
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-heading">Email Address</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0"><i class="fa-regular fa-envelope text-muted"></i></span>
+                    <input type="email" id="user-login-email" class="form-control form-control-omnix border-start-0" placeholder="name@example.com" required>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-heading">Password</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0"><i class="fa-solid fa-lock text-muted"></i></span>
+                    <input type="password" id="user-login-password" class="form-control form-control-omnix border-start-0" placeholder="••••••••" required>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-omnix-primary w-100 py-2.5 mb-2">Sign In to Dashboard</button>
+                <button type="button" class="btn btn-light border text-muted w-100 btn-sm" id="btn-fill-demo-user">
+                  <i class="fa-solid fa-wand-magic-sparkles me-1 text-primary"></i> Fill Demo Student (user@omnix.com)
+                </button>
+              </form>
+            </div>
+
+            <!-- User Register Tab -->
+            <div class="tab-pane fade" id="user-reg-pane" role="tabpanel">
+              <form id="user-register-form">
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-heading">Full Name</label>
+                  <input type="text" id="user-reg-name" class="form-control form-control-omnix" placeholder="e.g. John Doe" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-heading">Email Address</label>
+                  <input type="email" id="user-reg-email" class="form-control form-control-omnix" placeholder="name@example.com" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-heading">Password (min 6 chars)</label>
+                  <input type="password" id="user-reg-password" class="form-control form-control-omnix" placeholder="••••••••" minlength="6" required>
+                </div>
+                <button type="submit" class="btn btn-omnix-primary w-100 py-2.5">Create Free Account</button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Authentication Modal -->
+  <div class="modal fade" id="adminAuthModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-content-omnix">
+        <div class="modal-header modal-header-omnix">
+          <div class="d-flex align-items-center gap-2">
+            <div class="rounded-2 bg-dark text-white p-2" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+              <i class="fa-solid fa-shield-halved small"></i>
+            </div>
+            <div>
+              <h5 class="modal-title fw-bold text-heading mb-0">Administrator Portal</h5>
+              <div class="small text-muted">Restricted Staff & Evaluator Access</div>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body modal-body-omnix">
+          <div class="alert alert-secondary py-2 small mb-3">
+            <i class="fa-solid fa-circle-info me-1"></i> Requires verified <code>ROLE_ADMIN</code> authorization.
+          </div>
+          <form id="admin-login-form">
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-heading">Admin Email</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white border-end-0"><i class="fa-regular fa-envelope text-muted"></i></span>
+                <input type="email" id="admin-login-email" class="form-control form-control-omnix border-start-0" placeholder="admin@omnix.com" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-heading">Master Password</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white border-end-0"><i class="fa-solid fa-lock text-muted"></i></span>
+                <input type="password" id="admin-login-password" class="form-control form-control-omnix border-start-0" placeholder="••••••••" required>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-dark w-100 py-2.5 mb-2">Access Admin Console</button>
+            <button type="button" class="btn btn-light border text-muted w-100 btn-sm" id="btn-fill-demo-admin">
+              <i class="fa-solid fa-wand-magic-sparkles me-1 text-dark"></i> Fill Demo Admin (admin@omnix.com)
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Auth.setupAuthModals();
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('authRequired')) {
+        showToast('Please sign in to access your assessment dashboard.', 'warning');
+        const modal = new bootstrap.Modal(document.getElementById('userAuthModal'));
+        modal.show();
+      }
+      if (params.get('loggedOut')) {
+        showToast('You have been signed out safely.', 'info');
+      }
+    });
+  </script>
+</body>
+</html>
