@@ -1,4 +1,4 @@
-// data/seedData.js - Initial Seed Data for OMNIX Platform
+// data/seedData.js - Initial Seed Data for QuizCraft Platform
 
 const seedData = {
   users: [

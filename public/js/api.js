@@ -1,4 +1,4 @@
-// public/js/api.js - Central API Client & State Management for OMNIX
+// public/js/api.js - Central API Client & State Management for QuizCraft
 
 const API_BASE = '/api';
 
@@ -32,8 +32,9 @@ const API = {
 
   // Base fetch request wrapper
   async request(endpoint, options = {}) {
+    const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData;
     const headers = {
-      'Content-Type': 'application/json',
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
       ...(options.headers || {})
     };
 
@@ -131,26 +132,75 @@ const API = {
     });
   },
 
+  // PDF Extraction & Bulk Quiz Generation
+  async extractPdf(formData) {
+    return this.request('/questions/extract-pdf', {
+      method: 'POST',
+      body: formData
+    });
+  },
+
+  async importPdfQuizzes(payload) {
+    return this.request('/questions/import-pdf-quizzes', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  },
+
+  async getQuizzes(categoryId = null) {
+    const query = categoryId ? `?categoryId=${encodeURIComponent(categoryId)}` : '';
+    return this.request(`/questions/quizzes${query}`);
+  },
+
   // Quizzes & Attempts
-  async getQuizStatus(categoryId, userId = null) {
+  async getQuizStatus(categoryId, userId = null, quizId = null) {
     const uid = userId || (this.getUser() ? this.getUser().id : '');
-    const query = uid ? `?userId=${encodeURIComponent(uid)}` : '';
+    const params = new URLSearchParams();
+    if (uid) params.append('userId', uid);
+    if (quizId) params.append('quizId', quizId);
+    const query = params.toString() ? `?${params.toString()}` : '';
     return this.request(`/quizzes/${categoryId}/status${query}`);
   },
 
-  async getQuizQuestions(categoryId) {
+  async getQuizQuestions(categoryId, quizId = null) {
     const user = this.getUser();
-    const query = user ? `?userId=${encodeURIComponent(user.id)}` : '';
+    const params = new URLSearchParams();
+    if (user) params.append('userId', user.id);
+    if (quizId) params.append('quizId', quizId);
+    const query = params.toString() ? `?${params.toString()}` : '';
     return this.request(`/quizzes/${categoryId}/questions${query}`);
   },
 
-  async submitQuiz(categoryId, answers) {
+  async lockAnswer(categoryId, questionId, selectedOption, isSkipped = false) {
+    return this.request(`/quizzes/${categoryId}/lock-answer`, {
+      method: 'POST',
+      body: JSON.stringify({ questionId, selectedOption, isSkipped })
+    });
+  },
+
+  async useLifeline5050(categoryId, questionId) {
+    return this.request(`/quizzes/${categoryId}/lifeline-5050`, {
+      method: 'POST',
+      body: JSON.stringify({ questionId })
+    });
+  },
+
+  async useLifelineChange(categoryId, currentQuestionId, usedQuestionIds = []) {
+    return this.request(`/quizzes/${categoryId}/lifeline-change`, {
+      method: 'POST',
+      body: JSON.stringify({ currentQuestionId, usedQuestionIds })
+    });
+  },
+
+  async submitQuiz(categoryId, answers, quizId = null, lifelinesUsed = {}) {
     const user = this.getUser();
     return this.request(`/quizzes/${categoryId}/submit`, {
       method: 'POST',
       body: JSON.stringify({
         userId: user ? user.id : null,
-        answers
+        quizId,
+        answers,
+        lifelinesUsed
       })
     });
   },

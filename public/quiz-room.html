@@ -3,248 +3,416 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OMNIX — Quiz Room & Assessment Environment</title>
+  <title>QuizCraft — Gamified KBC Game-Show Assessment</title>
 
   <!-- Bootstrap 5.3 CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome 6 CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <!-- Custom OMNIX Theme -->
+  <!-- Custom QuizCraft Theme & KBC Studio Styling -->
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-body">
+<body class="kbc-arena-body">
 
-  <!-- Simplified Distraction-Free Header -->
-  <header class="navbar navbar-omnix py-2.5">
-    <div class="container">
-      <a class="navbar-brand-omnix" href="user-dashboard.html">
-        <div class="brand-badge"><i class="fa-solid fa-bolt"></i></div>
-        <span>OMN<span class="brand-text-accent">IX</span></span>
+  <!-- ================= STUDIO NAVBAR ================= -->
+  <header class="navbar navbar-kbc py-2.5 sticky-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a class="navbar-brand-omnix text-decoration-none d-flex align-items-center gap-2" href="user-dashboard.html">
+        <div class="brand-badge bg-warning text-dark"><i class="fa-solid fa-trophy"></i></div>
+        <span class="text-white fw-bold">Quiz<span class="text-warning">Craft</span> <span class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill ms-1 fs-6">ARENA</span></span>
       </a>
 
-      <div class="d-flex align-items-center gap-3">
-        <a href="user-dashboard.html" class="btn btn-sm btn-omnix-outline" id="btn-back-dashboard" onclick="return confirm('Are you sure you want to leave? Any unsubmitted answers will be lost.')">
-          <i class="fa-solid fa-arrow-left me-1"></i> Exit Assessment
+      <!-- Center Title Display -->
+      <div class="d-none d-md-block text-center">
+        <div class="fw-bold text-white small" id="nav-subject-title">Loading Assessment...</div>
+        <div class="text-warning small" style="font-size: 0.75rem;" id="nav-quiz-title">5-Question Championship Ladder</div>
+      </div>
+
+      <!-- Controls: Audio Toggle & Exit -->
+      <div class="d-flex align-items-center gap-2">
+        <button type="button" class="kbc-sound-btn" id="btn-sound-toggle" onclick="toggleAudioMute()" title="Toggle Sound FX">
+          <i class="fa-solid fa-volume-high" id="sound-icon"></i>
+          <span class="d-none d-sm-inline ms-1" id="sound-text">Sound ON</span>
+        </button>
+
+        <a href="user-dashboard.html" class="btn btn-outline-secondary btn-sm rounded-pill text-white border-secondary" id="btn-exit-quiz" onclick="return confirmExit()">
+          <i class="fa-solid fa-door-open me-1"></i> Exit
         </a>
       </div>
     </div>
   </header>
 
-  <!-- Main Quiz Container -->
-  <main class="container quiz-container my-4">
+  <!-- ================= MAIN QUIZ ARENA ================= -->
+  <main class="container kbc-container py-4 my-2">
 
-    <!-- ================= VIEW 1: ACTIVE QUIZ VIEW ================= -->
-    <div id="active-quiz-view">
-      
-      <!-- Quiz Status Header -->
-      <div class="quiz-header-card">
-        <div class="row align-items-center">
-          <div class="col-md-7 mb-3 mb-md-0">
-            <h4 class="fw-bold mb-1" id="quiz-title">Loading Assessment...</h4>
-            <div class="text-muted small" id="quiz-subtitle">Assessment • Objective Questions</div>
-          </div>
-          <div class="col-md-5 text-md-end">
-            <div class="timer-box timer-safe" id="timer-box">
-              <i class="fa-regular fa-clock"></i>
-              <span id="quiz-timer">--:--</span>
+    <!-- ================= VIEW 1: GAME-SHOW WELCOME SCREEN ================= -->
+    <div id="kbc-welcome-view" class="py-4">
+      <div class="row justify-content-center">
+        <div class="col-lg-9 col-xl-8">
+          <div class="kbc-welcome-card text-center">
+            
+            <div class="mb-3">
+              <span class="kbc-gold-badge">
+                <i class="fa-solid fa-bolt"></i> Official Championship Assessment
+              </span>
             </div>
+
+            <h1 class="display-5 fw-bold text-white mb-2" id="welcome-subject-name">Subject Arena</h1>
+            <h4 class="text-warning fw-semibold mb-4" id="welcome-quiz-title">Quiz 1 — Kaun Banega Assessment Champion</h4>
+
+            <!-- 5-Level Ladder Preview Strip -->
+            <div class="p-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 rounded-3 mb-4 text-start">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="text-warning small fw-bold text-uppercase" style="letter-spacing: 0.08em;">
+                  <i class="fa-solid fa-layer-group me-1"></i> 5-Level Question Ladder
+                </span>
+                <span class="badge bg-warning text-dark font-monospace fw-bold">Grand Prize: 25,000 Pts</span>
+              </div>
+              <div class="row g-2 text-center small text-light">
+                <div class="col"><div class="p-2 border border-secondary border-opacity-25 rounded bg-dark">L1 • 1,000</div></div>
+                <div class="col"><div class="p-2 border border-secondary border-opacity-25 rounded bg-dark">L2 • 2,500</div></div>
+                <div class="col"><div class="p-2 border border-warning rounded bg-warning bg-opacity-10 text-warning fw-bold">L3 • 5,000 (Safe)</div></div>
+                <div class="col"><div class="p-2 border border-secondary border-opacity-25 rounded bg-dark">L4 • 10,000</div></div>
+                <div class="col"><div class="p-2 border border-warning rounded bg-warning text-dark fw-bold">L5 • 25,000 🏆</div></div>
+              </div>
+            </div>
+
+            <!-- Arena Rules List -->
+            <div class="row g-3 text-start mb-4">
+              <div class="col-sm-6">
+                <div class="p-3 bg-dark bg-opacity-40 border border-secondary border-opacity-25 rounded-3 h-100">
+                  <div class="fw-bold text-warning mb-1"><i class="fa-regular fa-clock me-1"></i> 45s Countdown Timer</div>
+                  <div class="small text-muted">Each question has a 45-second timer. Answers auto-lock on timeout.</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="p-3 bg-dark bg-opacity-40 border border-secondary border-opacity-25 rounded-3 h-100">
+                  <div class="fw-bold text-warning mb-1"><i class="fa-solid fa-lock me-1"></i> Final Locking Mechanism</div>
+                  <div class="small text-muted">Select an option and press "Lock Answer". Once locked, the answer is final!</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="p-3 bg-dark bg-opacity-40 border border-secondary border-opacity-25 rounded-3 h-100">
+                  <div class="fw-bold text-warning mb-1"><i class="fa-solid fa-wand-magic-sparkles me-1"></i> 3 Powerful Lifelines</div>
+                  <div class="small text-muted">Use <strong>50:50</strong>, <strong>Skip Question</strong>, or <strong>Change Question</strong> once each.</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="p-3 bg-dark bg-opacity-40 border border-secondary border-opacity-25 rounded-3 h-100">
+                  <div class="fw-bold text-warning mb-1"><i class="fa-solid fa-shield-halved me-1"></i> Strict 2-Attempt Budget</div>
+                  <div class="small text-muted">Official scoring applies. Maximum 2 attempts per candidate on this quiz.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Start Button -->
+            <button type="button" class="kbc-hotseat-btn" onclick="startKbcQuiz()">
+              <span>START QUIZ</span>
+              <i class="fa-solid fa-circle-play fs-4"></i>
+            </button>
+
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Progress Bar & Counter -->
-        <div class="mt-3">
-          <div class="d-flex justify-content-between align-items-center mb-1 small fw-bold">
-            <span id="question-counter" class="text-primary">Question 1 of 5</span>
-            <span class="text-muted small">Keyboard shortcuts active (1-4, A-D)</span>
+    <!-- ================= VIEW 2: ACTIVE QUESTION STAGE ================= -->
+    <div id="kbc-game-stage" class="d-none">
+
+      <!-- Top HUD: Lifelines, Points & Progress -->
+      <div class="kbc-hud-card">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+          
+          <!-- Subject & Current Level -->
+          <div class="d-flex align-items-center gap-3">
+            <span class="kbc-question-level-badge" id="hud-level-badge">LEVEL 1 / 5</span>
+            <div>
+              <div class="fw-bold text-white mb-0" id="hud-category-name">Subject Name</div>
+              <div class="text-warning small" id="hud-level-points">Value: 1,000 Points</div>
+            </div>
           </div>
-          <div class="progress progress-omnix">
-            <div class="progress-bar progress-bar-omnix" id="quiz-progress-bar" style="width: 20%;"></div>
+
+          <!-- Lifelines Toolbar -->
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <span class="small text-muted d-none d-lg-inline me-1">LIFELINES:</span>
+            
+            <!-- 50:50 -->
+            <button type="button" class="kbc-lifeline-pill" id="btn-lifeline-5050" onclick="use5050Lifeline()" title="Eliminate two incorrect options">
+              <i class="fa-solid fa-calculator"></i>
+              <span>50:50</span>
+              <span class="badge-count" id="badge-count-5050">1</span>
+            </button>
+
+            <!-- Skip Question -->
+            <button type="button" class="kbc-lifeline-pill" id="btn-lifeline-skip" onclick="useSkipLifeline()" title="Skip this question without penalty">
+              <i class="fa-solid fa-forward-step"></i>
+              <span>Skip</span>
+              <span class="badge-count" id="badge-count-skip">1</span>
+            </button>
+
+            <!-- Change Question -->
+            <button type="button" class="kbc-lifeline-pill" id="btn-lifeline-change" onclick="useChangeLifeline()" title="Swap question with another from this subject">
+              <i class="fa-solid fa-arrows-rotate"></i>
+              <span>Change Q</span>
+              <span class="badge-count" id="badge-count-change">1</span>
+            </button>
           </div>
+
         </div>
       </div>
 
       <div class="row g-4">
-        <!-- Main Question Area -->
+        
+        <!-- Left: Question Display & Answer Buttons -->
         <div class="col-lg-8">
-          <div class="question-card">
-            
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <span class="question-badge">
-                <i class="fa-solid fa-circle-question me-1"></i> Multiple Choice Question
-              </span>
-              <button class="btn btn-omnix-outline btn-sm" id="btn-mark-review" onclick="toggleMarkForReview()">
-                <i class="fa-regular fa-flag me-1"></i> Mark for Review
-              </button>
+          
+          <!-- Question Box with SVG Timer -->
+          <div class="kbc-question-stage">
+            <div class="d-flex align-items-start justify-content-between gap-3 mb-2">
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-warning text-dark font-monospace px-2.5 py-1" id="q-number-pill">QUESTION 1</span>
+                <span class="badge bg-dark text-muted border border-secondary border-opacity-25" id="q-diff-badge">Standard</span>
+              </div>
+
+              <!-- SVG Animated Timer Ring (45s) -->
+              <div class="kbc-timer-wrapper">
+                <svg class="kbc-timer-svg" viewBox="0 0 80 80">
+                  <circle class="kbc-timer-bg" cx="40" cy="40" r="34"></circle>
+                  <circle class="kbc-timer-progress" id="timer-ring-circle" cx="40" cy="40" r="34" stroke-dasharray="213.6" stroke-dashoffset="0"></circle>
+                </svg>
+                <div class="kbc-timer-number" id="timer-display-num">45</div>
+              </div>
             </div>
 
-            <!-- Question Text -->
-            <div class="question-text" id="question-text">
+            <!-- Question Prompt Text -->
+            <div class="kbc-question-prompt" id="kbc-question-text">
               Loading question prompt...
             </div>
-
-            <!-- Options Grid (A, B, C, D) -->
-            <div class="options-grid mb-4" id="options-grid">
-              <!-- Dynamically populated options -->
-            </div>
-
-            <!-- Question Navigation Footer -->
-            <div class="d-flex justify-content-between align-items-center pt-3 border-top">
-              <button class="btn btn-omnix-outline" id="btn-prev-question" onclick="prevQuestion()" disabled>
-                <i class="fa-solid fa-arrow-left me-1"></i> Previous
-              </button>
-              
-              <button class="btn btn-danger btn-sm px-3" onclick="openSubmitModal()">
-                <i class="fa-solid fa-check me-1"></i> Submit Quiz
-              </button>
-
-              <button class="btn btn-omnix-primary" id="btn-next-question" onclick="nextQuestion()">
-                Next Question <i class="fa-solid fa-arrow-right ms-1"></i>
-              </button>
-            </div>
-
           </div>
+
+          <!-- 4 Answer Options (A, B, C, D) -->
+          <div class="kbc-options-grid" id="kbc-options-grid">
+            <!-- Dynamically populated options -->
+          </div>
+
+          <!-- Bottom Control Bar -->
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 pt-2">
+            <div class="text-muted small">
+              <i class="fa-solid fa-circle-info text-warning me-1"></i>
+              <span id="kbc-hint-text">Select an option, then press Lock Answer</span>
+            </div>
+
+            <div class="d-flex align-items-center gap-2">
+              <!-- Lock Button -->
+              <button type="button" class="kbc-lock-btn" id="btn-lock-choice" disabled onclick="confirmLockAnswer()">
+                <i class="fa-solid fa-lock me-1"></i> Lock Answer
+              </button>
+
+              <!-- Next Level Button (Revealed after lock) -->
+              <button type="button" class="kbc-next-btn d-none" id="btn-next-level" onclick="proceedToNextLevel()">
+                <span>Proceed to Level 2</span> <i class="fa-solid fa-arrow-right ms-1"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Post-Lock Conceptual Rationale Feedback -->
+          <div class="kbc-feedback-box d-none" id="kbc-feedback-box">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <div class="d-flex align-items-center gap-2" id="feedback-status-badge">
+                <span class="badge bg-success text-white px-3 py-1.5 rounded-pill"><i class="fa-solid fa-check me-1"></i> Correct Answer!</span>
+              </div>
+              <span class="text-warning small fw-bold font-monospace" id="feedback-points-awarded">+1,000 Points</span>
+            </div>
+            <div class="small text-light" id="feedback-explanation-text">
+              Conceptual rationale displayed here.
+            </div>
+          </div>
+
         </div>
 
-        <!-- Sidebar / Question Palette -->
+        <!-- Right: KBC Question Ladder -->
         <div class="col-lg-4">
-          <div class="omnix-card p-3 mb-3">
-            <h6 class="fw-bold mb-2">Question Navigation</h6>
-            <div class="d-flex flex-wrap gap-2 mb-3" id="question-palette">
-              <!-- Number buttons injected here -->
+          <div class="kbc-ladder-card">
+            <div class="kbc-ladder-title">
+              <span><i class="fa-solid fa-trophy text-warning me-1"></i> Question Ladder</span>
+              <span class="badge bg-warning text-dark font-monospace" id="ladder-score-badge">0 / 5</span>
             </div>
 
-            <!-- Legend -->
-            <div class="border-top pt-2.5 small text-muted">
-              <div class="d-flex align-items-center gap-2 mb-1">
-                <span class="badge bg-primary px-2">#</span> Current Question
+            <div class="kbc-ladder-list" id="kbc-ladder-list">
+              <!-- Level 5 (Top) down to Level 1 (Bottom) -->
+              <div class="kbc-ladder-step milestone" id="ladder-step-4" data-level="5">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="step-icon"><i class="fa-solid fa-crown text-warning"></i></span>
+                  <span>Level 5 • Final Question</span>
+                </div>
+                <span class="kbc-ladder-points">25,000 Pts</span>
               </div>
-              <div class="d-flex align-items-center gap-2 mb-1">
-                <span class="badge bg-success px-2">#</span> Answered
+
+              <div class="kbc-ladder-step" id="ladder-step-3" data-level="4">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="step-icon"><i class="fa-regular fa-circle"></i></span>
+                  <span>Level 4 • Question 4</span>
+                </div>
+                <span class="kbc-ladder-points">10,000 Pts</span>
               </div>
-              <div class="d-flex align-items-center gap-2 mb-1">
-                <span class="badge bg-warning text-dark px-2">#</span> Marked for Review
+
+              <div class="kbc-ladder-step milestone" id="ladder-step-2" data-level="3">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="step-icon"><i class="fa-solid fa-shield-halved text-warning"></i></span>
+                  <span>Level 3 • Safe Haven</span>
+                </div>
+                <span class="kbc-ladder-points">5,000 Pts</span>
               </div>
-              <div class="d-flex align-items-center gap-2">
-                <span class="badge bg-outline-secondary border px-2">#</span> Unanswered
+
+              <div class="kbc-ladder-step" id="ladder-step-1" data-level="2">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="step-icon"><i class="fa-regular fa-circle"></i></span>
+                  <span>Level 2 • Question 2</span>
+                </div>
+                <span class="kbc-ladder-points">2,500 Pts</span>
+              </div>
+
+              <div class="kbc-ladder-step active" id="ladder-step-0" data-level="1">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="step-icon"><i class="fa-solid fa-play text-warning"></i></span>
+                  <span>Level 1 • Question 1</span>
+                </div>
+                <span class="kbc-ladder-points">1,000 Pts</span>
               </div>
             </div>
-          </div>
 
-          <div class="alert alert-info py-2.5 px-3 small rounded-3">
-            <i class="fa-solid fa-shield-halved me-1"></i> <strong>Strict 2-Attempt Rule:</strong> This submission will count toward your strict 2-attempt budget.
+            <!-- Attempt Policy Note -->
+            <div class="mt-4 p-2.5 bg-dark bg-opacity-40 border border-secondary border-opacity-25 rounded-3 text-muted small">
+              <div class="d-flex align-items-center gap-2 text-warning mb-1">
+                <i class="fa-solid fa-shield"></i>
+                <strong class="text-white">Strict 2-Attempt Rule</strong>
+              </div>
+              <div>This submission will be recorded in the Candidate Submission Tracker.</div>
+            </div>
+
           </div>
         </div>
+
       </div>
 
     </div>
 
-    <!-- ================= VIEW 2: POST-QUIZ RESULT & REVIEW VIEW ================= -->
-    <div id="result-review-view" class="d-none">
+    <!-- ================= VIEW 3: PODIUM VICTORY / RESULT SCREEN ================= -->
+    <div id="kbc-podium-view" class="py-4 d-none">
+      <div class="row justify-content-center">
+        <div class="col-lg-9 col-xl-8">
+          <div class="kbc-podium-card">
+            
+            <!-- Confetti Canvas -->
+            <canvas id="confetti-canvas" class="position-absolute top-0 start-0 w-100 h-100 pointer-events-none" style="pointer-events: none;"></canvas>
 
-      <!-- Result Score Header Card -->
-      <div class="result-header-card">
-        <div class="mb-3" id="result-attempt-stamp">
-          <span class="badge bg-primary px-3 py-1.5 rounded-pill">Attempt #1 of 2 Complete</span>
-        </div>
+            <!-- Trophy / Medal Icon -->
+            <div class="mb-3">
+              <i class="fa-solid fa-trophy kbc-trophy-icon" id="podium-trophy-icon"></i>
+            </div>
 
-        <div class="score-circle pass" id="result-score-circle">
-          <div class="score-number" id="result-score-number">80%</div>
-          <div class="score-label">Final Score</div>
-        </div>
+            <div class="mb-2" id="podium-attempt-stamp">
+              <span class="badge bg-warning text-dark px-3 py-1.5 rounded-pill fw-bold">Official Attempt #1 of 2 Complete</span>
+            </div>
 
-        <h3 class="fw-bold mb-2" id="result-status-title">Assessment Evaluation</h3>
-        <p class="text-muted max-w-md mx-auto mb-4" id="result-status-message" style="max-width: 580px;">
-          Review your chosen responses and correct answers below.
-        </p>
+            <h1 class="display-6 fw-bold text-white mb-2" id="podium-status-title">Championship Assessment Complete!</h1>
+            <p class="text-light text-opacity-75 max-w-md mx-auto mb-4" id="podium-status-desc" style="max-width: 600px;">
+              Congratulations on completing the 5-Level Assessment Arena.
+            </p>
 
-        <div class="d-flex justify-content-center gap-3">
-          <a href="user-dashboard.html" class="btn btn-omnix-outline">
-            <i class="fa-solid fa-grid-2 me-1"></i> Return to Dashboard
-          </a>
-          <a href="#" class="btn btn-omnix-primary d-none" id="btn-retake-quiz">
-            <i class="fa-solid fa-rotate-right me-1"></i> Retake Quiz (Attempt #2 of 2)
-          </a>
+            <!-- Results Metrics Grid -->
+            <div class="row g-3 mb-4">
+              <div class="col-6 col-md-3">
+                <div class="kbc-result-stat-card">
+                  <div class="kbc-result-stat-val text-warning" id="stat-score-percent">100%</div>
+                  <div class="kbc-result-stat-lbl">Final Score</div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="kbc-result-stat-card">
+                  <div class="kbc-result-stat-val text-success" id="stat-correct-count">5 / 5</div>
+                  <div class="kbc-result-stat-lbl">Correct Answers</div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="kbc-result-stat-card">
+                  <div class="kbc-result-stat-val text-danger" id="stat-wrong-count">0</div>
+                  <div class="kbc-result-stat-lbl">Incorrect</div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="kbc-result-stat-card">
+                  <div class="kbc-result-stat-val text-info" id="stat-points-total">25,000</div>
+                  <div class="kbc-result-stat-lbl">Points Earned</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+              <a href="user-dashboard.html" class="btn btn-outline-warning rounded-pill px-4 py-2 fw-bold">
+                <i class="fa-solid fa-grid-2 me-1"></i> Return to Dashboard
+              </a>
+              <button type="button" class="btn btn-warning rounded-pill px-4 py-2 fw-bold text-dark" onclick="toggleDetailedReview()">
+                <i class="fa-solid fa-list-check me-1"></i> Review All 5 Questions
+              </button>
+              <a href="#" class="btn btn-outline-light rounded-pill px-4 py-2 fw-bold d-none" id="btn-podium-retake">
+                <i class="fa-solid fa-rotate-right me-1"></i> Retake Quiz (Final Attempt 2/2)
+              </a>
+            </div>
+
+            <!-- Collapsible Detailed Question Review -->
+            <div class="text-start d-none pt-4 border-top border-secondary border-opacity-25" id="kbc-detailed-review-section">
+              <h5 class="fw-bold text-warning mb-3"><i class="fa-solid fa-circle-question me-1"></i> Comprehensive Question-by-Question Review</h5>
+              <div id="kbc-review-cards-container">
+                <!-- Injected by quiz.js -->
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
-
-      <!-- Comprehensive Review List Header -->
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <div>
-          <h4 class="fw-bold mb-0">Detailed Question-by-Question Review</h4>
-          <span class="small text-muted">Explanations and rationale for all answers</span>
-        </div>
-      </div>
-
-      <!-- Injected Review Cards -->
-      <div id="review-questions-list">
-        <!-- Rendered by quiz.js -->
-      </div>
-
     </div>
 
   </main>
 
-  <!-- ================= SUBMIT CONFIRMATION MODAL ================= -->
-  <div class="modal fade" id="submitConfirmModal" tabindex="-1" aria-hidden="true">
+  <!-- Network / Sync Error Modal -->
+  <div class="modal fade" id="kbcErrorModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content modal-content-omnix">
-        <div class="modal-header modal-header-omnix">
-          <h5 class="modal-title fw-bold text-heading">Ready to Submit Assessment?</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      <div class="modal-content modal-content-omnix bg-dark text-white border-warning">
+        <div class="modal-header border-secondary">
+          <h5 class="modal-title fw-bold text-warning"><i class="fa-solid fa-triangle-exclamation me-2"></i>Network Synchronization Notice</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body modal-body-omnix">
-          <p class="text-muted small mb-3">
-            Please verify your question completion summary before confirming submission:
-          </p>
-
-          <div class="row g-2 text-center mb-3">
-            <div class="col-4">
-              <div class="p-2 border rounded-3 bg-light">
-                <div class="fw-bold fs-4 text-success" id="modal-answered-count">0</div>
-                <div class="small text-muted">Answered</div>
-              </div>
-            </div>
-            <div class="col-4">
-              <div class="p-2 border rounded-3 bg-light">
-                <div class="fw-bold fs-4 text-danger" id="modal-unanswered-count">0</div>
-                <div class="small text-muted">Unanswered</div>
-              </div>
-            </div>
-            <div class="col-4">
-              <div class="p-2 border rounded-3 bg-light">
-                <div class="fw-bold fs-4 text-warning" id="modal-marked-count">0</div>
-                <div class="small text-muted">Marked</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="alert alert-warning py-2 small mb-0">
-            <i class="fa-solid fa-triangle-exclamation me-1"></i> 
-            This submission will be recorded and count toward your <strong>maximum 2-attempt limit</strong> for this quiz.
+        <div class="modal-body">
+          <p class="text-light" id="kbc-error-msg">A temporary network disruption occurred while saving your answer.</p>
+          <div class="alert alert-info py-2 small mb-0">
+            <i class="fa-solid fa-shield-halved me-1"></i> Your selected answer has been safely preserved locally. Click 'Retry Sync' to continue.
           </div>
         </div>
-        <div class="modal-footer modal-footer-omnix">
-          <button type="button" class="btn btn-omnix-outline" data-bs-dismiss="modal">Continue Answering</button>
-          <button type="button" class="btn btn-primary" onclick="submitQuiz()">Confirm & Submit</button>
+        <div class="modal-footer border-secondary">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-warning text-dark fw-bold" id="btn-retry-sync" onclick="retrySyncOperation()">Retry Sync</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Submitting Loading Overlay -->
-  <div id="quiz-submitting-overlay" class="position-fixed top-0 start-0 w-100 h-100 bg-white bg-opacity-75 d-flex flex-column align-items-center justify-content-center d-none" style="z-index: 9999;">
-    <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status"></div>
-    <h5 class="fw-bold text-heading">Evaluating Your Answers...</h5>
-    <p class="text-muted small">Applying scoring algorithms and recording attempt validation</p>
+  <!-- Loading Overlay -->
+  <div id="kbc-loading-overlay" class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex flex-column align-items-center justify-content-center d-none" style="z-index: 9999;">
+    <div class="spinner-border text-warning mb-3" style="width: 3rem; height: 3rem;" role="status"></div>
+    <h5 class="fw-bold text-white" id="loading-overlay-title">Verifying Championship Answer...</h5>
+    <p class="text-warning small" id="loading-overlay-desc">Evaluating response against the official question bank</p>
   </div>
 
   <!-- Toast Notification Container -->
-  <div id="toast-container"></div>
+  <div id="toast-container" class="position-fixed bottom-0 end-0 p-3" style="z-index: 10000;"></div>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/quizSound.js"></script>
   <script src="js/quiz.js"></script>
 </body>
 </html>

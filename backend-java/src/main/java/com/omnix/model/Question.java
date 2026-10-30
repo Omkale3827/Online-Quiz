@@ -5,6 +5,8 @@ import java.util.List;
 public class Question {
     private String id;
     private String categoryId;
+    private String quizId;
+    private int quizGroup;
     private String questionText;
     private List<String> options;
     private int correctIndex; // 0, 1, 2, or 3
@@ -26,6 +28,12 @@ public class Question {
 
     public String getCategoryId() { return categoryId; }
     public void setCategoryId(String categoryId) { this.categoryId = categoryId; }
+
+    public String getQuizId() { return quizId; }
+    public void setQuizId(String quizId) { this.quizId = quizId; }
+
+    public int getQuizGroup() { return quizGroup; }
+    public void setQuizGroup(int quizGroup) { this.quizGroup = quizGroup; }
 
     public String getQuestionText() { return questionText; }
     public void setQuestionText(String questionText) { this.questionText = questionText; }

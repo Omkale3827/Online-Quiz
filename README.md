@@ -1,4 +1,4 @@
-# OMNIX — Interactive Online Quiz Platform
+# QuizCraft — Interactive Online Quiz Platform
 
 > **Master Every Domain.** A responsive full-stack online quiz and skill-assessment platform with dedicated User and Admin ecosystems, strict 2-attempt validation, instant scoring analytics, and comprehensive answer rationales.
 

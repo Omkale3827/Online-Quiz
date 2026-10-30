@@ -188,7 +188,7 @@ async function loadDetailedSubmissionLogs() {
           <div class="small text-muted">${log.userEmail}</div>
         </td>
         <td>
-          <span class="fw-semibold">${log.categoryName}</span>
+          <span class="fw-semibold">${log.categoryName}${log.quizTitle ? ' (' + log.quizTitle + ')' : ''}</span>
         </td>
         <td>${quotaBadge}</td>
         <td>${prevHtml}</td>

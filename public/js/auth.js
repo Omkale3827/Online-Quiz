@@ -111,7 +111,7 @@ const Auth = {
           submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Creating account...';
           const res = await API.register(name, email, password);
           API.setSession(res.token, res.user);
-          showToast('Account created successfully! Welcome to OMNIX.', 'success');
+          showToast('Account created successfully! Welcome to QuizCraft.', 'success');
           setTimeout(() => {
             window.location.href = 'user-dashboard.html';
           }, 800);

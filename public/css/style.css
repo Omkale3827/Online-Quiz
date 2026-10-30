@@ -882,3 +882,816 @@ h1, h2, h3, h4, h5, h6 {
 .omnix-toast.toast-success { border-left-color: var(--success); }
 .omnix-toast.toast-danger { border-left-color: var(--danger); }
 .omnix-toast.toast-warning { border-left-color: var(--warning); }
+
+/* ==========================================================================
+   Question Authoring Wizard & Automatic PDF Import System
+   ========================================================================== */
+.wizard-steps-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-card-subtle);
+  border-radius: var(--radius-md);
+}
+
+.wizard-step-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+}
+
+.wizard-step-item.active {
+  color: var(--primary);
+}
+
+.wizard-step-item.completed {
+  color: var(--success);
+}
+
+.wizard-step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #E2E8F0;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.wizard-step-item.active .wizard-step-num {
+  background: var(--primary);
+  color: #FFFFFF;
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.wizard-step-item.completed .wizard-step-num {
+  background: var(--success);
+  color: #FFFFFF;
+}
+
+.wizard-step-arrow {
+  color: var(--border-strong);
+  font-size: 0.75rem;
+}
+
+/* Method Selection Cards */
+.method-card {
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.method-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.method-card.selected {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.method-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+.method-card-manual .method-card-icon {
+  background: #EEF2FF;
+  color: var(--primary);
+}
+
+.method-card-pdf .method-card-icon {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+.method-card:hover .method-card-icon {
+  transform: scale(1.08);
+}
+
+/* PDF Drag and Drop Area */
+.pdf-drop-zone {
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  background: #FAF5FF;
+  background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pdf-drop-zone:hover,
+.pdf-drop-zone.dragover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.pdf-drop-icon {
+  font-size: 3rem;
+  color: #EF4444;
+  margin-bottom: 0.75rem;
+  transition: transform 0.2s ease;
+}
+
+.pdf-drop-zone:hover .pdf-drop-icon {
+  transform: translateY(-4px);
+}
+
+/* Metric Pills */
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-subtle);
+}
+
+.stat-pill.stat-primary {
+  background: var(--primary-light);
+  border-color: #C7D2FE;
+  color: var(--primary);
+}
+
+.stat-pill.stat-success {
+  background: var(--success-bg);
+  border-color: var(--success-border);
+  color: var(--success-text);
+}
+
+.stat-pill.stat-warning {
+  background: var(--warning-bg);
+  border-color: var(--warning-border);
+  color: var(--warning-text);
+}
+
+/* Quiz Preview Accordion / Cards */
+.quiz-preview-group {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+.quiz-preview-group-header {
+  padding: 0.75rem 1rem;
+  background: #F8FAFC;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.question-preview-item {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  background: #FFFFFF;
+}
+
+.question-preview-item:last-child {
+  border-bottom: none;
+}
+
+.question-preview-item.has-warning {
+  background: #FFFBEB;
+  border-left: 4px solid var(--warning);
+}
+
+/* ==========================================================================
+   QUIZCRAFT KBC GAME-SHOW STUDIO THEME & HUD
+   ========================================================================== */
+
+/* Full Studio Arena Backdrop */
+body.kbc-arena-body {
+  background: #080C1A;
+  background: radial-gradient(circle at 50% 15%, #16203D 0%, #0A0F24 55%, #040711 100%);
+  color: #F8FAFC;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body.kbc-arena-body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 600px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(245, 158, 11, 0.12) 0%, rgba(6, 182, 212, 0.08) 40%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.kbc-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Glass Studio Navbar */
+.navbar-kbc {
+  background: rgba(10, 15, 36, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.25);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+.kbc-sound-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #FCD34D;
+  border-radius: 9999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.kbc-sound-btn:hover {
+  background: rgba(245, 158, 11, 0.2);
+  color: #FFF;
+  border-color: #F59E0B;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+}
+
+.kbc-sound-btn.muted {
+  color: #94A3B8;
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+/* --- 1. WELCOME HERO / THE HOT SEAT SCREEN --- */
+.kbc-welcome-card {
+  background: linear-gradient(135deg, rgba(16, 24, 54, 0.95) 0%, rgba(8, 12, 28, 0.98) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 32px rgba(245, 158, 11, 0.15);
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.kbc-welcome-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.kbc-gold-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.25rem;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.2) 0%, rgba(217, 119, 6, 0.2) 100%);
+  border: 1px solid #F59E0B;
+  color: #FDE68A;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.25);
+}
+
+.kbc-hotseat-btn {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 50%, #B45309 100%);
+  color: #0F172A;
+  font-weight: 800;
+  font-size: 1.2rem;
+  padding: 1rem 2.75rem;
+  border-radius: 9999px;
+  border: 2px solid #FDE68A;
+  box-shadow: 0 0 24px rgba(245, 158, 11, 0.6), 0 4px 16px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.kbc-hotseat-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 36px rgba(245, 158, 11, 0.8), 0 8px 24px rgba(0, 0, 0, 0.6);
+  color: #000;
+  border-color: #FFF;
+}
+
+/* --- 2. QUESTION STAGE & HUD --- */
+.kbc-hud-card {
+  background: rgba(14, 21, 46, 0.85);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1.5rem;
+}
+
+/* Lifeline Buttons */
+.kbc-lifeline-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1.5px solid #F59E0B;
+  color: #FDE68A;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.kbc-lifeline-pill:hover:not(:disabled) {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: #FCD34D;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.5);
+  transform: translateY(-1px);
+}
+
+.kbc-lifeline-pill:disabled,
+.kbc-lifeline-pill.used {
+  border-color: rgba(148, 163, 184, 0.25);
+  color: #64748B;
+  background: rgba(15, 23, 42, 0.4);
+  cursor: not-allowed;
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+.kbc-lifeline-pill .badge-count {
+  background: #F59E0B;
+  color: #0F172A;
+  font-size: 0.72rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 9999px;
+  font-weight: 800;
+}
+
+.kbc-lifeline-pill:disabled .badge-count,
+.kbc-lifeline-pill.used .badge-count {
+  background: #475569;
+  color: #94A3B8;
+}
+
+/* Circular SVG Countdown Timer */
+.kbc-timer-wrapper {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kbc-timer-svg {
+  transform: rotate(-90deg);
+  width: 76px;
+  height: 76px;
+}
+
+.kbc-timer-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 6;
+}
+
+.kbc-timer-progress {
+  fill: none;
+  stroke: #10B981;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
+}
+
+.kbc-timer-progress.timer-warning {
+  stroke: #F59E0B;
+}
+
+.kbc-timer-progress.timer-danger {
+  stroke: #EF4444;
+  filter: drop-shadow(0 0 6px #EF4444);
+  animation: timerPulse 0.6s infinite alternate;
+}
+
+@keyframes timerPulse {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; stroke-width: 7; }
+}
+
+.kbc-timer-number {
+  position: absolute;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #F8FAFC;
+  font-variant-numeric: tabular-nums;
+}
+
+.kbc-timer-number.timer-danger {
+  color: #EF4444;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+}
+
+/* --- 3. QUESTION BOX --- */
+.kbc-question-stage {
+  background: linear-gradient(180deg, rgba(16, 24, 52, 0.95) 0%, rgba(10, 15, 34, 0.98) 100%);
+  border: 2px solid rgba(245, 158, 11, 0.5);
+  border-radius: 1rem;
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), inset 0 0 24px rgba(245, 158, 11, 0.08);
+  position: relative;
+}
+
+.kbc-question-stage::before,
+.kbc-question-stage::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #F59E0B;
+}
+
+.kbc-question-stage::before {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.kbc-question-stage::after {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+.kbc-question-level-badge {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid #F59E0B;
+  color: #FDE68A;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.25rem 0.85rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.kbc-question-prompt {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.55;
+  color: #F8FAFC;
+  margin-top: 0.75rem;
+  min-height: 48px;
+}
+
+/* --- 4. BEVELED KBC ANSWER OPTION BUTTONS --- */
+.kbc-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.15rem;
+  margin-bottom: 1.75rem;
+}
+
+@media (max-width: 768px) {
+  .kbc-options-grid {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+}
+
+.kbc-option-btn {
+  background: linear-gradient(135deg, rgba(16, 24, 52, 0.85) 0%, rgba(9, 14, 32, 0.95) 100%);
+  border: 1.5px solid rgba(71, 85, 105, 0.6);
+  border-radius: 0.85rem;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #F1F5F9;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  position: relative;
+  user-select: none;
+}
+
+.kbc-option-btn:hover:not(.locked):not(.disabled):not(.correct):not(.wrong) {
+  border-color: #F59E0B;
+  background: linear-gradient(135deg, rgba(24, 36, 75, 0.9) 0%, rgba(14, 21, 46, 0.98) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.25);
+}
+
+.kbc-option-letter {
+  width: 36px;
+  height: 36px;
+  border-radius: 0.5rem;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid #F59E0B;
+  color: #FDE68A;
+  font-weight: 800;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.kbc-option-text {
+  font-size: 1.02rem;
+  font-weight: 500;
+  line-height: 1.4;
+  flex-grow: 1;
+}
+
+/* Option States */
+.kbc-option-btn.selected {
+  border-color: #F59E0B;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.2) 100%);
+  box-shadow: 0 0 24px rgba(245, 158, 11, 0.45);
+}
+
+.kbc-option-btn.selected .kbc-option-letter {
+  background: #F59E0B;
+  color: #0F172A;
+}
+
+.kbc-option-btn.locked {
+  border-color: #FBBF24;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.4) 0%, rgba(180, 83, 9, 0.35) 100%);
+  box-shadow: 0 0 28px rgba(245, 158, 11, 0.6);
+  animation: lockPulse 1.2s infinite alternate;
+}
+
+@keyframes lockPulse {
+  0% { box-shadow: 0 0 16px rgba(245, 158, 11, 0.4); }
+  100% { box-shadow: 0 0 32px rgba(245, 158, 11, 0.85); }
+}
+
+.kbc-option-btn.correct {
+  border-color: #10B981 !important;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.4) 0%, rgba(5, 150, 105, 0.35) 100%) !important;
+  box-shadow: 0 0 32px rgba(16, 185, 129, 0.7) !important;
+  color: #FFFFFF !important;
+}
+
+.kbc-option-btn.correct .kbc-option-letter {
+  background: #10B981 !important;
+  color: #FFFFFF !important;
+  border-color: #34D399 !important;
+}
+
+.kbc-option-btn.wrong {
+  border-color: #EF4444 !important;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.35) 0%, rgba(185, 28, 28, 0.3) 100%) !important;
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.5) !important;
+}
+
+.kbc-option-btn.wrong .kbc-option-letter {
+  background: #EF4444 !important;
+  color: #FFFFFF !important;
+  border-color: #F87171 !important;
+}
+
+.kbc-option-btn.eliminated {
+  opacity: 0.2;
+  text-decoration: line-through;
+  pointer-events: none;
+  filter: grayscale(1);
+}
+
+/* Action Buttons Bar */
+.kbc-lock-btn {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  color: #0F172A;
+  border: 1.5px solid #FDE68A;
+  font-weight: 800;
+  padding: 0.85rem 2rem;
+  border-radius: 9999px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+  transition: all 0.2s ease;
+}
+
+.kbc-lock-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(245, 158, 11, 0.7);
+  color: #000;
+}
+
+.kbc-lock-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.kbc-next-btn {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #FFF;
+  border: 1.5px solid #6EE7B7;
+  font-weight: 800;
+  padding: 0.85rem 2rem;
+  border-radius: 9999px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+  transition: all 0.2s ease;
+}
+
+.kbc-next-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(16, 185, 129, 0.7);
+  color: #FFF;
+}
+
+/* Post-Lock Feedback Box */
+.kbc-feedback-box {
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 0.85rem;
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.25rem;
+  animation: fadeInDown 0.3s ease;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 5. KBC QUESTION LADDER (RIGHT SIDE) --- */
+.kbc-ladder-card {
+  background: linear-gradient(180deg, rgba(16, 24, 52, 0.95) 0%, rgba(9, 14, 32, 0.98) 100%);
+  border: 1.5px solid rgba(245, 158, 11, 0.35);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.kbc-ladder-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #FCD34D;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.kbc-ladder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.kbc-ladder-step {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: 0.65rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  color: #94A3B8;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.25s ease;
+}
+
+.kbc-ladder-step.milestone {
+  color: #FDE68A;
+  border-color: rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.kbc-ladder-step.active {
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.35) 0%, rgba(217, 119, 6, 0.25) 100%);
+  border-color: #F59E0B;
+  color: #FFFFFF;
+  font-weight: 800;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+  transform: scale(1.02);
+}
+
+.kbc-ladder-step.completed {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #34D399;
+}
+
+.kbc-ladder-step.skipped {
+  background: rgba(100, 116, 139, 0.15);
+  border-color: rgba(100, 116, 139, 0.3);
+  color: #94A3B8;
+  text-decoration: line-through;
+}
+
+.kbc-ladder-step.wrong {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #F87171;
+}
+
+.kbc-ladder-points {
+  font-family: monospace;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+/* --- 6. VICTORY / FINAL RESULT PODIUM --- */
+.kbc-podium-card {
+  background: linear-gradient(135deg, rgba(16, 24, 52, 0.98) 0%, rgba(8, 12, 28, 0.99) 100%);
+  border: 2px solid rgba(245, 158, 11, 0.5);
+  border-radius: 1.5rem;
+  padding: 3rem 2rem;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), 0 0 40px rgba(245, 158, 11, 0.2);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.kbc-trophy-icon {
+  font-size: 4.5rem;
+  color: #F59E0B;
+  filter: drop-shadow(0 0 24px rgba(245, 158, 11, 0.6));
+  animation: trophyFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes trophyFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+.kbc-result-stat-card {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 0.85rem;
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+
+.kbc-result-stat-val {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #F8FAFC;
+}
+
+.kbc-result-stat-lbl {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #94A3B8;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+

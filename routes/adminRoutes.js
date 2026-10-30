@@ -88,7 +88,7 @@ router.get('/attempts', (req, res) => {
   const grouped = {};
 
   db.attempts.forEach(attempt => {
-    const key = `${attempt.userId}_${attempt.categoryId}`;
+    const key = `${attempt.userId}_${attempt.quizId || attempt.categoryId}`;
     if (!grouped[key]) {
       grouped[key] = {
         userId: attempt.userId,
@@ -96,6 +96,8 @@ router.get('/attempts', (req, res) => {
         userEmail: attempt.userEmail,
         categoryId: attempt.categoryId,
         categoryName: attempt.categoryName,
+        quizId: attempt.quizId || null,
+        quizTitle: attempt.quizTitle || null,
         attempts: []
       };
     }
@@ -131,6 +133,8 @@ router.get('/attempts', (req, res) => {
       userEmail: group.userEmail,
       categoryId: group.categoryId,
       categoryName: group.categoryName,
+      quizId: group.quizId,
+      quizTitle: group.quizTitle,
       totalAttemptsMade,
       isMaxReached: totalAttemptsMade >= 2,
       latestAttempt,

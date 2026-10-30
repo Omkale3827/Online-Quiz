@@ -6,7 +6,14 @@
       "email": "user@omnix.com",
       "password": "user123",
       "role": "ROLE_USER",
-      "createdAt": "2026-10-01T10:00:00.000Z"
+      "createdAt": "2026-10-01T10:00:00.000Z",
+      "characterId": "naruto",
+      "xp": 50,
+      "level": 1,
+      "levelTitle": "Beginner",
+      "badges": [
+        "first_trial"
+      ]
     },
     {
       "id": "admin-1",
@@ -33,12 +40,12 @@
       "createdAt": "2026-10-05T14:15:00.000Z"
     },
     {
-      "id": "user-1791487321319",
-      "name": "john",
-      "email": "john22@gmail.com",
-      "password": "12345678",
+      "id": "user-1791789894465",
+      "name": "ayman",
+      "email": "ayman24@gamil.com",
+      "password": "123456",
       "role": "ROLE_USER",
-      "createdAt": "2026-10-08T19:22:01.319Z"
+      "createdAt": "2026-10-12T07:24:54.465Z"
     }
   ],
   "categories": [
@@ -100,8 +107,23 @@
   "questions": [
     {
       "id": "q-gk-1",
+      "categoryId": "cat-c",
+      "questionText": "example of int",
+      "options": [
+        "1",
+        "1.0",
+        "a",
+        "2rw"
+      ],
+      "correctIndex": 0,
+      "explanation": "",
+      "quizId": "quiz-cat-c-1",
+      "quizGroup": 1
+    },
+    {
+      "id": "q-gk-6",
       "categoryId": "cat-gk",
-      "questionText": "Which planet in our solar system is known as the \"Red Planet\"?",
+      "questionText": "Which planet in our solar system is known as the Red Planet?",
       "options": [
         "Venus",
         "Mars",
@@ -109,7 +131,9 @@
         "Saturn"
       ],
       "correctIndex": 1,
-      "explanation": "Mars is known as the Red Planet due to the prevalent iron oxide (rust) on its surface giving it a reddish hue."
+      "explanation": "Mars appears reddish due to iron oxide minerals on its surface.",
+      "quizId": "quiz-cat-gk-1",
+      "quizGroup": 1
     },
     {
       "id": "q-gk-2",
@@ -122,7 +146,9 @@
         "Alexander Hamilton"
       ],
       "correctIndex": 2,
-      "explanation": "Thomas Jefferson drafted the Declaration of Independence in June-July 1776."
+      "explanation": "Thomas Jefferson drafted the Declaration of Independence in June-July 1776.",
+      "quizId": "quiz-cat-gk-1",
+      "quizGroup": 1
     },
     {
       "id": "q-gk-3",
@@ -135,7 +161,9 @@
         "Fe"
       ],
       "correctIndex": 1,
-      "explanation": "Au comes from the Latin word \"Aurum\", which means shining dawn or gold."
+      "explanation": "Au comes from the Latin word \"Aurum\", which means shining dawn or gold.",
+      "quizId": "quiz-cat-gk-1",
+      "quizGroup": 1
     },
     {
       "id": "q-gk-4",
@@ -148,7 +176,9 @@
         "Arctic Ocean"
       ],
       "correctIndex": 2,
-      "explanation": "The Pacific Ocean is the largest and deepest ocean on Earth."
+      "explanation": "The Pacific Ocean is the largest and deepest ocean on Earth.",
+      "quizId": "quiz-cat-gk-1",
+      "quizGroup": 1
     },
     {
       "id": "q-gk-5",
@@ -161,7 +191,9 @@
         "Temple of Artemis"
       ],
       "correctIndex": 1,
-      "explanation": "The Lighthouse of Alexandria (Pharos) was built by the Ptolemaic Kingdom around 280 BC."
+      "explanation": "The Lighthouse of Alexandria (Pharos) was built by the Ptolemaic Kingdom around 280 BC.",
+      "quizId": "quiz-cat-gk-1",
+      "quizGroup": 1
     },
     {
       "id": "q-math-1",
@@ -174,7 +206,9 @@
         "3x^2 - 5x"
       ],
       "correctIndex": 0,
-      "explanation": "Using the power rule: d/dx(3x^3) = 9x^2, d/dx(-5x) = -5, and d/dx(7) = 0. Therefore f'(x) = 9x^2 - 5."
+      "explanation": "Using the power rule: d/dx(3x^3) = 9x^2, d/dx(-5x) = -5, and d/dx(7) = 0. Therefore f'(x) = 9x^2 - 5.",
+      "quizId": "quiz-cat-math-1",
+      "quizGroup": 1
     },
     {
       "id": "q-math-2",
@@ -187,7 +221,9 @@
         "5/36"
       ],
       "correctIndex": 1,
-      "explanation": "The combinations that sum to 7 are: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) which is 6 pairs out of 36 outcomes = 6/36 = 1/6."
+      "explanation": "The combinations that sum to 7 are: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) which is 6 pairs out of 36 outcomes = 6/36 = 1/6.",
+      "quizId": "quiz-cat-math-1",
+      "quizGroup": 1
     },
     {
       "id": "q-math-3",
@@ -200,7 +236,9 @@
         "8"
       ],
       "correctIndex": 2,
-      "explanation": "2^6 = 64, so log2(64) = 6."
+      "explanation": "2^6 = 64, so log2(64) = 6.",
+      "quizId": "quiz-cat-math-1",
+      "quizGroup": 1
     },
     {
       "id": "q-math-4",
@@ -213,7 +251,9 @@
         "18"
       ],
       "correctIndex": 1,
-      "explanation": "By the Pythagorean theorem: c = sqrt(9^2 + 12^2) = sqrt(81 + 144) = sqrt(225) = 15."
+      "explanation": "By the Pythagorean theorem: c = sqrt(9^2 + 12^2) = sqrt(81 + 144) = sqrt(225) = 15.",
+      "quizId": "quiz-cat-math-1",
+      "quizGroup": 1
     },
     {
       "id": "q-math-5",
@@ -226,7 +266,9 @@
         "7"
       ],
       "correctIndex": 0,
-      "explanation": "Determinant of a 2x2 matrix [[a,b],[c,d]] is ad - bc = (2*4) - (3*1) = 8 - 3 = 5."
+      "explanation": "Determinant of a 2x2 matrix [[a,b],[c,d]] is ad - bc = (2*4) - (3*1) = 8 - 3 = 5.",
+      "quizId": "quiz-cat-math-1",
+      "quizGroup": 1
     },
     {
       "id": "q-java-1",
@@ -239,7 +281,9 @@
         "Native Method Stack"
       ],
       "correctIndex": 2,
-      "explanation": "The JVM Heap is the runtime data area from which memory for all class instances and arrays is allocated, shared across threads."
+      "explanation": "The JVM Heap is the runtime data area from which memory for all class instances and arrays is allocated, shared across threads.",
+      "quizId": "quiz-cat-java-1",
+      "quizGroup": 1
     },
     {
       "id": "q-java-2",
@@ -252,7 +296,9 @@
         "Serialization of the class"
       ],
       "correctIndex": 1,
-      "explanation": "A final class cannot be extended or subclassed (e.g., java.lang.String is final)."
+      "explanation": "A final class cannot be extended or subclassed (e.g., java.lang.String is final).",
+      "quizId": "quiz-cat-java-1",
+      "quizGroup": 1
     },
     {
       "id": "q-java-3",
@@ -265,7 +311,9 @@
         "Cloneable"
       ],
       "correctIndex": 1,
-      "explanation": "Comparable<T> provides the compareTo(T o) method for defining natural ordering of instances."
+      "explanation": "Comparable<T> provides the compareTo(T o) method for defining natural ordering of instances.",
+      "quizId": "quiz-cat-java-1",
+      "quizGroup": 1
     },
     {
       "id": "q-java-4",
@@ -278,7 +326,9 @@
         "NullPointerException"
       ],
       "correctIndex": 1,
-      "explanation": "\"==\" compares object reference addresses. s1 is in the String Constant Pool while s2 is allocated on the regular heap, so their references differ."
+      "explanation": "\"==\" compares object reference addresses. s1 is in the String Constant Pool while s2 is allocated on the regular heap, so their references differ.",
+      "quizId": "quiz-cat-java-1",
+      "quizGroup": 1
     },
     {
       "id": "q-java-5",
@@ -291,7 +341,9 @@
         "ZGC"
       ],
       "correctIndex": 2,
-      "explanation": "G1 GC became the default collector starting in JDK 9, replacing Parallel GC."
+      "explanation": "G1 GC became the default collector starting in JDK 9, replacing Parallel GC.",
+      "quizId": "quiz-cat-java-1",
+      "quizGroup": 1
     },
     {
       "id": "q-c-1",
@@ -304,7 +356,9 @@
         "Evaluated at link-time as an unsigned short"
       ],
       "correctIndex": 1,
-      "explanation": "In C, sizeof is an operator evaluated at compile-time (except for VLAs in C99+) that yields the size in bytes of type size_t."
+      "explanation": "In C, sizeof is an operator evaluated at compile-time (except for VLAs in C99+) that yields the size in bytes of type size_t.",
+      "quizId": "quiz-cat-c-1",
+      "quizGroup": 1
     },
     {
       "id": "q-c-2",
@@ -317,7 +371,9 @@
         "valloc()"
       ],
       "correctIndex": 2,
-      "explanation": "calloc(num, size) allocates memory and clears every bit to zero, whereas malloc leaves bytes uninitialized."
+      "explanation": "calloc(num, size) allocates memory and clears every bit to zero, whereas malloc leaves bytes uninitialized.",
+      "quizId": "quiz-cat-c-1",
+      "quizGroup": 1
     },
     {
       "id": "q-c-3",
@@ -330,7 +386,9 @@
         "ptr resides in read-only RAM"
       ],
       "correctIndex": 1,
-      "explanation": "\"const int * ptr\" means ptr points to a const integer; the data cannot be modified through this pointer, but ptr itself can point to another address."
+      "explanation": "\"const int * ptr\" means ptr points to a const integer; the data cannot be modified through this pointer, but ptr itself can point to another address.",
+      "quizId": "quiz-cat-c-1",
+      "quizGroup": 1
     },
     {
       "id": "q-c-4",
@@ -343,7 +401,9 @@
         "%u"
       ],
       "correctIndex": 2,
-      "explanation": "%p is the standard format specifier defined in C to print pointer memory addresses (usually void*)."
+      "explanation": "%p is the standard format specifier defined in C to print pointer memory addresses (usually void*).",
+      "quizId": "quiz-cat-c-1",
+      "quizGroup": 1
     },
     {
       "id": "q-c-5",
@@ -356,7 +416,9 @@
         "A pointer declared inside a struct"
       ],
       "correctIndex": 1,
-      "explanation": "A dangling pointer arises when an object is deleted or deallocated without modifying the value of the pointer, leaving it pointing to invalid memory."
+      "explanation": "A dangling pointer arises when an object is deleted or deallocated without modifying the value of the pointer, leaving it pointing to invalid memory.",
+      "quizId": "quiz-cat-c-1",
+      "quizGroup": 1
     },
     {
       "id": "q-py-1",
@@ -369,7 +431,9 @@
         "tuple"
       ],
       "correctIndex": 3,
-      "explanation": "Tuples are immutable sequences in Python; their elements cannot be modified, added, or removed after creation."
+      "explanation": "Tuples are immutable sequences in Python; their elements cannot be modified, added, or removed after creation.",
+      "quizId": "quiz-cat-python-1",
+      "quizGroup": 1
     },
     {
       "id": "q-py-2",
@@ -382,7 +446,9 @@
         "[1, 9, 25]"
       ],
       "correctIndex": 0,
-      "explanation": "range(5) gives 0, 1, 2, 3, 4. The odd numbers are 1 and 3. Their squares are 1^2 = 1 and 3^2 = 9. So [1, 9]."
+      "explanation": "range(5) gives 0, 1, 2, 3, 4. The odd numbers are 1 and 3. Their squares are 1^2 = 1 and 3^2 = 9. So [1, 9].",
+      "quizId": "quiz-cat-python-1",
+      "quizGroup": 1
     },
     {
       "id": "q-py-3",
@@ -395,7 +461,9 @@
         "Secures network sockets from race conditions"
       ],
       "correctIndex": 1,
-      "explanation": "The GIL is a mutex that prevents multiple OS threads from executing CPython bytecodes simultaneously, safeguarding memory management."
+      "explanation": "The GIL is a mutex that prevents multiple OS threads from executing CPython bytecodes simultaneously, safeguarding memory management.",
+      "quizId": "quiz-cat-python-1",
+      "quizGroup": 1
     },
     {
       "id": "q-py-4",
@@ -408,7 +476,9 @@
         "produce"
       ],
       "correctIndex": 1,
-      "explanation": "The \"yield\" statement pauses function execution and returns a value to the caller, resuming state on subsequent next() calls."
+      "explanation": "The \"yield\" statement pauses function execution and returns a value to the caller, resuming state on subsequent next() calls.",
+      "quizId": "quiz-cat-python-1",
+      "quizGroup": 1
     },
     {
       "id": "q-py-5",
@@ -421,7 +491,9 @@
         "None"
       ],
       "correctIndex": 1,
-      "explanation": "Non-empty strings evaluate to True in Python boolean context, regardless of the word inside."
+      "explanation": "Non-empty strings evaluate to True in Python boolean context, regardless of the word inside.",
+      "quizId": "quiz-cat-python-1",
+      "quizGroup": 1
     },
     {
       "id": "q-web-1",
@@ -434,7 +506,9 @@
         "Pseudo-class selector (:hover)"
       ],
       "correctIndex": 2,
-      "explanation": "An ID selector (0,1,0,0) outweighs class selectors (0,0,1,0) and element selectors (0,0,0,1)."
+      "explanation": "An ID selector (0,1,0,0) outweighs class selectors (0,0,1,0) and element selectors (0,0,0,1).",
+      "quizId": "quiz-cat-webdev-1",
+      "quizGroup": 1
     },
     {
       "id": "q-web-2",
@@ -447,7 +521,9 @@
         "404"
       ],
       "correctIndex": 0,
-      "explanation": "HTTP 301 indicates Moved Permanently, causing browsers and search engines to update their bookmarks and indexing."
+      "explanation": "HTTP 301 indicates Moved Permanently, causing browsers and search engines to update their bookmarks and indexing.",
+      "quizId": "quiz-cat-webdev-1",
+      "quizGroup": 1
     },
     {
       "id": "q-web-3",
@@ -460,7 +536,9 @@
         "I/O Polling queue"
       ],
       "correctIndex": 1,
-      "explanation": "Microtasks (Promises, MutationObserver) are always drained completely before the event loop executes the next macrotask (setTimeout/setInterval)."
+      "explanation": "Microtasks (Promises, MutationObserver) are always drained completely before the event loop executes the next macrotask (setTimeout/setInterval).",
+      "quizId": "quiz-cat-webdev-1",
+      "quizGroup": 1
     },
     {
       "id": "q-web-4",
@@ -473,7 +551,9 @@
         "Automatically centers flex children"
       ],
       "correctIndex": 1,
-      "explanation": "With border-box, the width and height properties include content, padding, and border, preventing unexpected box expansion."
+      "explanation": "With border-box, the width and height properties include content, padding, and border, preventing unexpected box expansion.",
+      "quizId": "quiz-cat-webdev-1",
+      "quizGroup": 1
     },
     {
       "id": "q-web-5",
@@ -486,7 +566,9 @@
         "Worker API"
       ],
       "correctIndex": 1,
-      "explanation": "The standard browser Fetch API (fetch()) provides a modern, promise-based interface for fetching resources across the network."
+      "explanation": "The standard browser Fetch API (fetch()) provides a modern, promise-based interface for fetching resources across the network.",
+      "quizId": "quiz-cat-webdev-1",
+      "quizGroup": 1
     }
   ],
   "attempts": [
@@ -675,190 +757,18 @@
       ]
     },
     {
-      "id": "att-1791486930267",
-      "userId": "user-1",
-      "userName": "Demo Student",
-      "userEmail": "user@omnix.com",
-      "categoryId": "cat-gk",
-      "categoryName": "General Knowledge",
-      "attemptNumber": 2,
-      "score": 2,
-      "totalQuestions": 5,
-      "percentage": 40,
-      "passed": false,
-      "timestamp": "2026-10-08T19:15:30.267Z",
-      "answers": [
-        {
-          "questionId": "q-gk-1",
-          "questionText": "Which planet in our solar system is known as the \"Red Planet\"?",
-          "options": [
-            "Venus",
-            "Mars",
-            "Jupiter",
-            "Saturn"
-          ],
-          "selectedOption": 1,
-          "correctOption": 1,
-          "isCorrect": true,
-          "explanation": "Mars is known as the Red Planet due to the prevalent iron oxide (rust) on its surface giving it a reddish hue."
-        },
-        {
-          "questionId": "q-gk-2",
-          "questionText": "Who was the primary author of the United States Declaration of Independence?",
-          "options": [
-            "George Washington",
-            "Benjamin Franklin",
-            "Thomas Jefferson",
-            "Alexander Hamilton"
-          ],
-          "selectedOption": 2,
-          "correctOption": 2,
-          "isCorrect": true,
-          "explanation": "Thomas Jefferson drafted the Declaration of Independence in June-July 1776."
-        },
-        {
-          "questionId": "q-gk-3",
-          "questionText": "What is the chemical symbol for the element Gold?",
-          "options": [
-            "Ag",
-            "Au",
-            "Gd",
-            "Fe"
-          ],
-          "selectedOption": null,
-          "correctOption": 1,
-          "isCorrect": false,
-          "explanation": "Au comes from the Latin word \"Aurum\", which means shining dawn or gold."
-        },
-        {
-          "questionId": "q-gk-4",
-          "questionText": "What is the largest ocean on Earth covering more than 30% of the planet surface?",
-          "options": [
-            "Atlantic Ocean",
-            "Indian Ocean",
-            "Pacific Ocean",
-            "Arctic Ocean"
-          ],
-          "selectedOption": null,
-          "correctOption": 2,
-          "isCorrect": false,
-          "explanation": "The Pacific Ocean is the largest and deepest ocean on Earth."
-        },
-        {
-          "questionId": "q-gk-5",
-          "questionText": "Which ancient wonder was located in Alexandria, Egypt and guided sailors into harbor?",
-          "options": [
-            "Colossus of Rhodes",
-            "Lighthouse of Alexandria",
-            "Hanging Gardens of Babylon",
-            "Temple of Artemis"
-          ],
-          "selectedOption": null,
-          "correctOption": 1,
-          "isCorrect": false,
-          "explanation": "The Lighthouse of Alexandria (Pharos) was built by the Ptolemaic Kingdom around 280 BC."
-        }
-      ]
-    },
-    {
-      "id": "att-1791487358528",
-      "userId": "user-1791487321319",
-      "userName": "john",
-      "userEmail": "john22@gmail.com",
-      "categoryId": "cat-gk",
-      "categoryName": "General Knowledge",
-      "attemptNumber": 1,
-      "score": 2,
-      "totalQuestions": 5,
-      "percentage": 40,
-      "passed": false,
-      "timestamp": "2026-10-08T19:22:38.528Z",
-      "answers": [
-        {
-          "questionId": "q-gk-1",
-          "questionText": "Which planet in our solar system is known as the \"Red Planet\"?",
-          "options": [
-            "Venus",
-            "Mars",
-            "Jupiter",
-            "Saturn"
-          ],
-          "selectedOption": 0,
-          "correctOption": 1,
-          "isCorrect": false,
-          "explanation": "Mars is known as the Red Planet due to the prevalent iron oxide (rust) on its surface giving it a reddish hue."
-        },
-        {
-          "questionId": "q-gk-2",
-          "questionText": "Who was the primary author of the United States Declaration of Independence?",
-          "options": [
-            "George Washington",
-            "Benjamin Franklin",
-            "Thomas Jefferson",
-            "Alexander Hamilton"
-          ],
-          "selectedOption": 2,
-          "correctOption": 2,
-          "isCorrect": true,
-          "explanation": "Thomas Jefferson drafted the Declaration of Independence in June-July 1776."
-        },
-        {
-          "questionId": "q-gk-3",
-          "questionText": "What is the chemical symbol for the element Gold?",
-          "options": [
-            "Ag",
-            "Au",
-            "Gd",
-            "Fe"
-          ],
-          "selectedOption": 1,
-          "correctOption": 1,
-          "isCorrect": true,
-          "explanation": "Au comes from the Latin word \"Aurum\", which means shining dawn or gold."
-        },
-        {
-          "questionId": "q-gk-4",
-          "questionText": "What is the largest ocean on Earth covering more than 30% of the planet surface?",
-          "options": [
-            "Atlantic Ocean",
-            "Indian Ocean",
-            "Pacific Ocean",
-            "Arctic Ocean"
-          ],
-          "selectedOption": 1,
-          "correctOption": 2,
-          "isCorrect": false,
-          "explanation": "The Pacific Ocean is the largest and deepest ocean on Earth."
-        },
-        {
-          "questionId": "q-gk-5",
-          "questionText": "Which ancient wonder was located in Alexandria, Egypt and guided sailors into harbor?",
-          "options": [
-            "Colossus of Rhodes",
-            "Lighthouse of Alexandria",
-            "Hanging Gardens of Babylon",
-            "Temple of Artemis"
-          ],
-          "selectedOption": 2,
-          "correctOption": 1,
-          "isCorrect": false,
-          "explanation": "The Lighthouse of Alexandria (Pharos) was built by the Ptolemaic Kingdom around 280 BC."
-        }
-      ]
-    },
-    {
-      "id": "att-1791487688891",
-      "userId": "user-1791487321319",
-      "userName": "john",
-      "userEmail": "john22@gmail.com",
+      "id": "att-1791789931367",
+      "userId": "user-1791789894465",
+      "userName": "ayman",
+      "userEmail": "ayman24@gamil.com",
       "categoryId": "cat-math",
       "categoryName": "Mathematics",
       "attemptNumber": 1,
-      "score": 0,
+      "score": 1,
       "totalQuestions": 5,
-      "percentage": 0,
+      "percentage": 20,
       "passed": false,
-      "timestamp": "2026-10-08T19:28:08.891Z",
+      "timestamp": "2026-10-12T07:25:31.367Z",
       "answers": [
         {
           "questionId": "q-math-1",
@@ -869,9 +779,9 @@
             "9x^3 - 5",
             "3x^2 - 5x"
           ],
-          "selectedOption": 2,
+          "selectedOption": 0,
           "correctOption": 0,
-          "isCorrect": false,
+          "isCorrect": true,
           "explanation": "Using the power rule: d/dx(3x^3) = 9x^2, d/dx(-5x) = -5, and d/dx(7) = 0. Therefore f'(x) = 9x^2 - 5."
         },
         {
@@ -883,7 +793,7 @@
             "7/36",
             "5/36"
           ],
-          "selectedOption": 2,
+          "selectedOption": 3,
           "correctOption": 1,
           "isCorrect": false,
           "explanation": "The combinations that sum to 7 are: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) which is 6 pairs out of 36 outcomes = 6/36 = 1/6."
@@ -911,7 +821,7 @@
             "16",
             "18"
           ],
-          "selectedOption": 0,
+          "selectedOption": 3,
           "correctOption": 1,
           "isCorrect": false,
           "explanation": "By the Pythagorean theorem: c = sqrt(9^2 + 12^2) = sqrt(81 + 144) = sqrt(225) = 15."
@@ -925,7 +835,7 @@
             "11",
             "7"
           ],
-          "selectedOption": 1,
+          "selectedOption": 2,
           "correctOption": 0,
           "isCorrect": false,
           "explanation": "Determinant of a 2x2 matrix [[a,b],[c,d]] is ad - bc = (2*4) - (3*1) = 8 - 3 = 5."
@@ -933,18 +843,268 @@
       ]
     },
     {
-      "id": "att-1791528088800",
+      "id": "att-1791797531447",
+      "userId": "user-1",
+      "userName": "Demo Student",
+      "userEmail": "user@omnix.com",
+      "categoryId": "cat-java",
+      "categoryName": "Java Programming",
+      "attemptNumber": 1,
+      "score": 1,
+      "totalQuestions": 5,
+      "percentage": 20,
+      "passed": false,
+      "timestamp": "2026-10-12T09:32:11.447Z",
+      "answers": [
+        {
+          "questionId": "q-java-1",
+          "questionText": "Which memory area in JVM is shared among all threads and holds object instances?",
+          "options": [
+            "JVM Stack",
+            "Program Counter (PC) Register",
+            "Heap Memory",
+            "Native Method Stack"
+          ],
+          "selectedOption": 2,
+          "correctOption": 2,
+          "isCorrect": true,
+          "explanation": "The JVM Heap is the runtime data area from which memory for all class instances and arrays is allocated, shared across threads."
+        },
+        {
+          "questionId": "q-java-2",
+          "questionText": "What does the \"final\" keyword prevent when applied to a class in Java?",
+          "options": [
+            "Instantiation of the class",
+            "Inheritance / Subclassing of the class",
+            "Overriding of all its variables",
+            "Serialization of the class"
+          ],
+          "selectedOption": 3,
+          "correctOption": 1,
+          "isCorrect": false,
+          "explanation": "A final class cannot be extended or subclassed (e.g., java.lang.String is final)."
+        },
+        {
+          "questionId": "q-java-3",
+          "questionText": "Which Java interface must be implemented to allow an object to be sorted using Collections.sort() naturally?",
+          "options": [
+            "Comparator<T>",
+            "Comparable<T>",
+            "Serializable",
+            "Cloneable"
+          ],
+          "selectedOption": 3,
+          "correctOption": 1,
+          "isCorrect": false,
+          "explanation": "Comparable<T> provides the compareTo(T o) method for defining natural ordering of instances."
+        },
+        {
+          "questionId": "q-java-4",
+          "questionText": "What will String s1 = \"Java\"; String s2 = new String(\"Java\"); System.out.println(s1 == s2); print?",
+          "options": [
+            "true",
+            "false",
+            "Compilation Error",
+            "NullPointerException"
+          ],
+          "selectedOption": 2,
+          "correctOption": 1,
+          "isCorrect": false,
+          "explanation": "\"==\" compares object reference addresses. s1 is in the String Constant Pool while s2 is allocated on the regular heap, so their references differ."
+        },
+        {
+          "questionId": "q-java-5",
+          "questionText": "Which Garbage Collector algorithm was introduced as the default GC in Java 9 onwards?",
+          "options": [
+            "Serial GC",
+            "Parallel Old GC",
+            "G1 (Garbage-First) GC",
+            "ZGC"
+          ],
+          "selectedOption": 3,
+          "correctOption": 2,
+          "isCorrect": false,
+          "explanation": "G1 GC became the default collector starting in JDK 9, replacing Parallel GC."
+        }
+      ]
+    },
+    {
+      "id": "att-1793360058315",
+      "userId": "��e",
+      "userName": "Unknown User",
+      "userEmail": "unknown@user.com",
+      "categoryId": "cat-gk",
+      "categoryName": "General Knowledge",
+      "quizId": "quiz-cat-gk-1",
+      "quizTitle": "Quiz 1",
+      "attemptNumber": 1,
+      "score": 0,
+      "totalQuestions": 4,
+      "percentage": 0,
+      "passed": false,
+      "xpEarned": 50,
+      "characterId": "naruto",
+      "rankTier": "training",
+      "timestamp": "2026-10-30T11:34:18.315Z",
+      "answers": [
+        {
+          "questionId": "q-gk-2",
+          "questionText": "Who was the primary author of the United States Declaration of Independence?",
+          "options": [
+            "George Washington",
+            "Benjamin Franklin",
+            "Thomas Jefferson",
+            "Alexander Hamilton"
+          ],
+          "selectedOption": 0,
+          "correctOption": 2,
+          "isCorrect": false,
+          "explanation": "Thomas Jefferson drafted the Declaration of Independence in June-July 1776."
+        },
+        {
+          "questionId": "q-gk-3",
+          "questionText": "What is the chemical symbol for the element Gold?",
+          "options": [
+            "Ag",
+            "Au",
+            "Gd",
+            "Fe"
+          ],
+          "selectedOption": 0,
+          "correctOption": 1,
+          "isCorrect": false,
+          "explanation": "Au comes from the Latin word \"Aurum\", which means shining dawn or gold."
+        },
+        {
+          "questionId": "q-gk-4",
+          "questionText": "What is the largest ocean on Earth covering more than 30% of the planet surface?",
+          "options": [
+            "Atlantic Ocean",
+            "Indian Ocean",
+            "Pacific Ocean",
+            "Arctic Ocean"
+          ],
+          "selectedOption": 0,
+          "correctOption": 2,
+          "isCorrect": false,
+          "explanation": "The Pacific Ocean is the largest and deepest ocean on Earth."
+        },
+        {
+          "questionId": "q-gk-5",
+          "questionText": "Which ancient wonder was located in Alexandria, Egypt and guided sailors into harbor?",
+          "options": [
+            "Colossus of Rhodes",
+            "Lighthouse of Alexandria",
+            "Hanging Gardens of Babylon",
+            "Temple of Artemis"
+          ],
+          "selectedOption": 0,
+          "correctOption": 1,
+          "isCorrect": false,
+          "explanation": "The Lighthouse of Alexandria (Pharos) was built by the Ptolemaic Kingdom around 280 BC."
+        }
+      ]
+    },
+    {
+      "id": "att-1793360093480",
+      "userId": "user-1",
+      "userName": "Demo Student",
+      "userEmail": "user@omnix.com",
+      "categoryId": "cat-gk",
+      "categoryName": "General Knowledge",
+      "quizId": "quiz-cat-gk-1",
+      "quizTitle": "Quiz 1",
+      "attemptNumber": 2,
+      "score": 0,
+      "totalQuestions": 4,
+      "percentage": 0,
+      "passed": false,
+      "xpEarned": 50,
+      "characterId": "naruto",
+      "rankTier": "training",
+      "timestamp": "2026-10-30T11:34:53.480Z",
+      "answers": [
+        {
+          "questionId": "q-gk-2",
+          "questionText": "Who was the primary author of the United States Declaration of Independence?",
+          "options": [
+            "George Washington",
+            "Benjamin Franklin",
+            "Thomas Jefferson",
+            "Alexander Hamilton"
+          ],
+          "selectedOption": 0,
+          "correctOption": 2,
+          "isCorrect": false,
+          "explanation": "Thomas Jefferson drafted the Declaration of Independence in June-July 1776."
+        },
+        {
+          "questionId": "q-gk-3",
+          "questionText": "What is the chemical symbol for the element Gold?",
+          "options": [
+            "Ag",
+            "Au",
+            "Gd",
+            "Fe"
+          ],
+          "selectedOption": 0,
+          "correctOption": 1,
+          "isCorrect": false,
+          "explanation": "Au comes from the Latin word \"Aurum\", which means shining dawn or gold."
+        },
+        {
+          "questionId": "q-gk-4",
+          "questionText": "What is the largest ocean on Earth covering more than 30% of the planet surface?",
+          "options": [
+            "Atlantic Ocean",
+            "Indian Ocean",
+            "Pacific Ocean",
+            "Arctic Ocean"
+          ],
+          "selectedOption": 0,
+          "correctOption": 2,
+          "isCorrect": false,
+          "explanation": "The Pacific Ocean is the largest and deepest ocean on Earth."
+        },
+        {
+          "questionId": "q-gk-5",
+          "questionText": "Which ancient wonder was located in Alexandria, Egypt and guided sailors into harbor?",
+          "options": [
+            "Colossus of Rhodes",
+            "Lighthouse of Alexandria",
+            "Hanging Gardens of Babylon",
+            "Temple of Artemis"
+          ],
+          "selectedOption": 0,
+          "correctOption": 1,
+          "isCorrect": false,
+          "explanation": "The Lighthouse of Alexandria (Pharos) was built by the Ptolemaic Kingdom around 280 BC."
+        }
+      ]
+    },
+    {
+      "id": "att-1793361928950",
       "userId": "user-1",
       "userName": "Demo Student",
       "userEmail": "user@omnix.com",
       "categoryId": "cat-math",
       "categoryName": "Mathematics",
+      "quizId": "quiz-cat-math-1",
+      "quizTitle": "Quiz 1",
       "attemptNumber": 1,
       "score": 2,
       "totalQuestions": 5,
+      "correctCount": 2,
+      "incorrectCount": 3,
+      "skippedCount": 0,
       "percentage": 40,
       "passed": false,
-      "timestamp": "2026-10-09T06:41:28.800Z",
+      "lifelinesUsed": {
+        "50-50": false,
+        "skip": false,
+        "change": false
+      },
+      "timestamp": "2026-10-30T12:05:28.950Z",
       "answers": [
         {
           "questionId": "q-math-1",
@@ -958,92 +1118,7 @@
           "selectedOption": 1,
           "correctOption": 0,
           "isCorrect": false,
-          "explanation": "Using the power rule: d/dx(3x^3) = 9x^2, d/dx(-5x) = -5, and d/dx(7) = 0. Therefore f'(x) = 9x^2 - 5."
-        },
-        {
-          "questionId": "q-math-2",
-          "questionText": "If a fair 6-sided die is rolled twice, what is the probability of obtaining a sum equal to 7?",
-          "options": [
-            "1/12",
-            "1/6",
-            "7/36",
-            "5/36"
-          ],
-          "selectedOption": 0,
-          "correctOption": 1,
-          "isCorrect": false,
-          "explanation": "The combinations that sum to 7 are: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) which is 6 pairs out of 36 outcomes = 6/36 = 1/6."
-        },
-        {
-          "questionId": "q-math-3",
-          "questionText": "What is the value of log2(64)?",
-          "options": [
-            "4",
-            "5",
-            "6",
-            "8"
-          ],
-          "selectedOption": 2,
-          "correctOption": 2,
-          "isCorrect": true,
-          "explanation": "2^6 = 64, so log2(64) = 6."
-        },
-        {
-          "questionId": "q-math-4",
-          "questionText": "In a right-angled triangle, if the legs have lengths 9 and 12, what is the length of the hypotenuse?",
-          "options": [
-            "14",
-            "15",
-            "16",
-            "18"
-          ],
-          "selectedOption": 0,
-          "correctOption": 1,
-          "isCorrect": false,
-          "explanation": "By the Pythagorean theorem: c = sqrt(9^2 + 12^2) = sqrt(81 + 144) = sqrt(225) = 15."
-        },
-        {
-          "questionId": "q-math-5",
-          "questionText": "What is the value of the matrix determinant |[2, 3], [1, 4]|?",
-          "options": [
-            "5",
-            "8",
-            "11",
-            "7"
-          ],
-          "selectedOption": 0,
-          "correctOption": 0,
-          "isCorrect": true,
-          "explanation": "Determinant of a 2x2 matrix [[a,b],[c,d]] is ad - bc = (2*4) - (3*1) = 8 - 3 = 5."
-        }
-      ]
-    },
-    {
-      "id": "att-1791528118531",
-      "userId": "user-1",
-      "userName": "Demo Student",
-      "userEmail": "user@omnix.com",
-      "categoryId": "cat-math",
-      "categoryName": "Mathematics",
-      "attemptNumber": 2,
-      "score": 3,
-      "totalQuestions": 5,
-      "percentage": 60,
-      "passed": true,
-      "timestamp": "2026-10-09T06:41:58.531Z",
-      "answers": [
-        {
-          "questionId": "q-math-1",
-          "questionText": "What is the derivative of f(x) = 3x^3 - 5x + 7 with respect to x?",
-          "options": [
-            "9x^2 - 5",
-            "6x^2 - 5",
-            "9x^3 - 5",
-            "3x^2 - 5x"
-          ],
-          "selectedOption": 0,
-          "correctOption": 0,
-          "isCorrect": true,
+          "isSkipped": false,
           "explanation": "Using the power rule: d/dx(3x^3) = 9x^2, d/dx(-5x) = -5, and d/dx(7) = 0. Therefore f'(x) = 9x^2 - 5."
         },
         {
@@ -1058,6 +1133,7 @@
           "selectedOption": 1,
           "correctOption": 1,
           "isCorrect": true,
+          "isSkipped": false,
           "explanation": "The combinations that sum to 7 are: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) which is 6 pairs out of 36 outcomes = 6/36 = 1/6."
         },
         {
@@ -1069,9 +1145,10 @@
             "6",
             "8"
           ],
-          "selectedOption": 2,
+          "selectedOption": 3,
           "correctOption": 2,
-          "isCorrect": true,
+          "isCorrect": false,
+          "isSkipped": false,
           "explanation": "2^6 = 64, so log2(64) = 6."
         },
         {
@@ -1083,9 +1160,10 @@
             "16",
             "18"
           ],
-          "selectedOption": 0,
+          "selectedOption": 1,
           "correctOption": 1,
-          "isCorrect": false,
+          "isCorrect": true,
+          "isSkipped": false,
           "explanation": "By the Pythagorean theorem: c = sqrt(9^2 + 12^2) = sqrt(81 + 144) = sqrt(225) = 15."
         },
         {
@@ -1097,12 +1175,76 @@
             "11",
             "7"
           ],
-          "selectedOption": 1,
+          "selectedOption": 3,
           "correctOption": 0,
           "isCorrect": false,
+          "isSkipped": false,
           "explanation": "Determinant of a 2x2 matrix [[a,b],[c,d]] is ad - bc = (2*4) - (3*1) = 8 - 3 = 5."
         }
       ]
     }
-  ]
+  ],
+  "quizzes": [
+    {
+      "id": "quiz-cat-gk-1",
+      "title": "Quiz 1",
+      "categoryId": "cat-gk",
+      "categoryName": "General Knowledge",
+      "quizNumber": 1,
+      "totalQuestions": 4,
+      "totalTimeMinutes": 5,
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "quiz-cat-math-1",
+      "title": "Quiz 1",
+      "categoryId": "cat-math",
+      "categoryName": "Mathematics",
+      "quizNumber": 1,
+      "totalQuestions": 5,
+      "totalTimeMinutes": 6,
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "quiz-cat-java-1",
+      "title": "Quiz 1",
+      "categoryId": "cat-java",
+      "categoryName": "Java Programming",
+      "quizNumber": 1,
+      "totalQuestions": 5,
+      "totalTimeMinutes": 5,
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "quiz-cat-c-1",
+      "title": "Quiz 1",
+      "categoryId": "cat-c",
+      "categoryName": "C Programming",
+      "quizNumber": 1,
+      "totalQuestions": 6,
+      "totalTimeMinutes": 6,
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "quiz-cat-python-1",
+      "title": "Quiz 1",
+      "categoryId": "cat-python",
+      "categoryName": "Python",
+      "quizNumber": 1,
+      "totalQuestions": 5,
+      "totalTimeMinutes": 5,
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    },
+    {
+      "id": "quiz-cat-webdev-1",
+      "title": "Quiz 1",
+      "categoryId": "cat-webdev",
+      "categoryName": "Web Development",
+      "quizNumber": 1,
+      "totalQuestions": 5,
+      "totalTimeMinutes": 5,
+      "createdAt": "2026-10-01T00:00:00.000Z"
+    }
+  ],
+  "importedPdfs": []
 }

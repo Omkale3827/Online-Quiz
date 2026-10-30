@@ -1,4 +1,4 @@
-// server.js - OMNIX Backend Application Server
+// server.js - QuizCraft Backend Application Server
 
 const express = require('express');
 const cors = require('cors');
@@ -32,7 +32,7 @@ app.use('/api/admin', adminRoutes);
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ONLINE',
-    app: 'OMNIX Interactive Quiz Platform',
+    app: 'QuizCraft Interactive Quiz Platform',
     timestamp: new Date().toISOString()
   });
 });
@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
 // Start Server
 app.listen(PORT, () => {
   console.log(`====================================================`);
-  console.log(`🚀 OMNIX Quiz Platform Server Running on Port ${PORT}`);
+  console.log(`🚀 QuizCraft Quiz Platform Server Running on Port ${PORT}`);
   console.log(`🌐 Web URL: http://localhost:${PORT}`);
   console.log(`📊 Admin Portal: http://localhost:${PORT}/admin-dashboard.html`);
   console.log(`👤 User Dashboard: http://localhost:${PORT}/user-dashboard.html`);
