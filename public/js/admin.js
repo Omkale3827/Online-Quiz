@@ -106,106 +106,257 @@ async function loadRegisteredUsersTable() {
   }
 }
 
+let rawSubmissionLogs = [];
+let allCandidateAverages = {};
+
 async function loadDetailedSubmissionLogs() {
   const tableBody = document.getElementById('admin-attempts-table-body');
   if (!tableBody) return;
 
   try {
     const data = await API.getAdminAttempts();
-    const logs = data.userQuizLogs || [];
-    tableBody.innerHTML = '';
+    rawSubmissionLogs = data.userQuizLogs || [];
+    allCandidateAverages = data.candidateOverallAverages || {};
 
-    if (logs.length === 0) {
-      tableBody.innerHTML = `
-        <tr>
-          <td colspan="7" class="text-center py-4 text-muted">No quiz submission logs recorded yet.</td>
-        </tr>
-      `;
-      return;
-    }
-
-    logs.forEach(log => {
-      // Latest Attempt details
-      const latest = log.latestAttempt;
-      const prev = log.previousAttempt;
-
-      let latestHtml = `<span class="text-muted">—</span>`;
-      if (latest) {
-        const latestDate = new Date(latest.timestamp).toLocaleDateString('en-US', {
-          month: 'short',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        });
-        latestHtml = `
-          <div>
-            <span class="fw-bold ${latest.passed ? 'text-success' : 'text-danger'}">${latest.score}/${latest.totalQuestions} (${latest.percentage}%)</span>
-            <div class="small text-muted" style="font-size: 0.76rem;">${latestDate}</div>
-          </div>
-        `;
-      }
-
-      // Previous Attempt details
-      let prevHtml = `<span class="text-muted small italic">None (First Attempt)</span>`;
-      if (prev) {
-        const prevDate = new Date(prev.timestamp).toLocaleDateString('en-US', {
-          month: 'short',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        });
-        prevHtml = `
-          <div>
-            <span class="fw-bold ${prev.passed ? 'text-success' : 'text-danger'}">${prev.score}/${prev.totalQuestions} (${prev.percentage}%)</span>
-            <div class="small text-muted" style="font-size: 0.76rem;">${prevDate}</div>
-          </div>
-        `;
-      }
-
-      // Improvement Delta
-      let deltaBadge = '';
-      if (log.scoreImprovement !== null) {
-        if (log.scoreImprovement > 0) {
-          deltaBadge = `<span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill"><i class="fa-solid fa-arrow-up me-1"></i>+${log.scoreImprovement}%</span>`;
-        } else if (log.scoreImprovement < 0) {
-          deltaBadge = `<span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill"><i class="fa-solid fa-arrow-down me-1"></i>${log.scoreImprovement}%</span>`;
-        } else {
-          deltaBadge = `<span class="badge bg-light text-muted border rounded-pill">0% (Equal)</span>`;
-        }
-      } else {
-        deltaBadge = `<span class="badge bg-light text-muted border rounded-pill">N/A</span>`;
-      }
-
-      // Attempt quota badge
-      const quotaBadge = log.isMaxReached
-        ? `<span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill fw-bold">2 / 2 (MAX)</span>`
-        : `<span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill fw-bold">1 / 2</span>`;
-
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>
-          <div class="fw-bold text-heading">${log.userName}</div>
-          <div class="small text-muted">${log.userEmail}</div>
-        </td>
-        <td>
-          <span class="fw-semibold">${log.categoryName}${log.quizTitle ? ' (' + log.quizTitle + ')' : ''}</span>
-        </td>
-        <td>${quotaBadge}</td>
-        <td>${prevHtml}</td>
-        <td>${latestHtml}</td>
-        <td>${deltaBadge}</td>
-        <td class="text-end">
-          <button class="btn btn-omnix-outline btn-sm" onclick="openAttemptDetailsModal('${latest ? latest.id : ''}')">
-            <i class="fa-solid fa-file-lines me-1"></i> Inspect
-          </button>
-        </td>
-      `;
-      tableBody.appendChild(row);
-    });
+    renderSubmissionTrackerTable();
 
   } catch (err) {
     console.error('Error loading submissions:', err);
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="8" class="text-center py-4 text-danger">
+          <i class="fa-solid fa-triangle-exclamation me-1"></i> Failed to load candidate submissions.
+        </td>
+      </tr>
+    `;
   }
+}
+
+function handleTrackerFilterChange() {
+  renderSubmissionTrackerTable();
+}
+
+function resetTrackerFilters() {
+  const subjectSelect = document.getElementById('tracker-subject-filter');
+  const sortSelect = document.getElementById('tracker-sort-by');
+  const searchInput = document.getElementById('tracker-search-input');
+
+  if (subjectSelect) subjectSelect.value = 'all';
+  if (sortSelect) sortSelect.value = 'default';
+  if (searchInput) searchInput.value = '';
+
+  renderSubmissionTrackerTable();
+}
+
+function renderSubmissionTrackerTable() {
+  const tableBody = document.getElementById('admin-attempts-table-body');
+  if (!tableBody) return;
+
+  const subjectFilter = (document.getElementById('tracker-subject-filter')?.value || 'all');
+  const sortBy = (document.getElementById('tracker-sort-by')?.value || 'default');
+  const searchQuery = (document.getElementById('tracker-search-input')?.value || '').trim().toLowerCase();
+
+  // 1. Filter by Search Query
+  let list = [...rawSubmissionLogs];
+  if (searchQuery) {
+    list = list.filter(log =>
+      (log.userName && log.userName.toLowerCase().includes(searchQuery)) ||
+      (log.userEmail && log.userEmail.toLowerCase().includes(searchQuery)) ||
+      (log.categoryName && log.categoryName.toLowerCase().includes(searchQuery))
+    );
+  }
+
+  // 2. Filter by Subject
+  if (subjectFilter !== 'all') {
+    list = list.filter(log => log.categoryName === subjectFilter || log.categoryId === subjectFilter);
+  }
+
+  // 3. Sort Candidates
+  if (sortBy === 'highest_marks') {
+    list.sort((a, b) => {
+      const scoreA = a.latestAttempt ? a.latestAttempt.score : -1;
+      const scoreB = b.latestAttempt ? b.latestAttempt.score : -1;
+      if (scoreB !== scoreA) return scoreB - scoreA;
+      const pctA = a.latestAttempt ? a.latestAttempt.percentage : -1;
+      const pctB = b.latestAttempt ? b.latestAttempt.percentage : -1;
+      if (pctB !== pctA) return pctB - pctA;
+      return (a.userName || '').localeCompare(b.userName || '');
+    });
+  } else if (sortBy === 'lowest_marks') {
+    list.sort((a, b) => {
+      const scoreA = a.latestAttempt ? a.latestAttempt.score : 999;
+      const scoreB = b.latestAttempt ? b.latestAttempt.score : 999;
+      if (scoreA !== scoreB) return scoreA - scoreB;
+      const pctA = a.latestAttempt ? a.latestAttempt.percentage : 999;
+      const pctB = b.latestAttempt ? b.latestAttempt.percentage : 999;
+      if (pctA !== pctB) return pctA - pctB;
+      return (a.userName || '').localeCompare(b.userName || '');
+    });
+  } else if (sortBy === 'highest_average') {
+    list.sort((a, b) => {
+      const avgA = a.candidateAverage ? a.candidateAverage.averageMarks : 0;
+      const avgB = b.candidateAverage ? b.candidateAverage.averageMarks : 0;
+      if (avgB !== avgA) return avgB - avgA;
+      const pctA = a.candidateAverage ? a.candidateAverage.averagePercentage : 0;
+      const pctB = b.candidateAverage ? b.candidateAverage.averagePercentage : 0;
+      if (pctB !== pctA) return pctB - pctA;
+      const scoreA = a.latestAttempt ? a.latestAttempt.score : 0;
+      const scoreB = b.latestAttempt ? b.latestAttempt.score : 0;
+      if (scoreB !== scoreA) return scoreB - scoreA;
+      return (a.userName || '').localeCompare(b.userName || '');
+    });
+  } else {
+    // Default Order: latest attempt timestamp descending
+    list.sort((a, b) => {
+      const timeA = a.latestAttempt ? new Date(a.latestAttempt.timestamp).getTime() : 0;
+      const timeB = b.latestAttempt ? new Date(b.latestAttempt.timestamp).getTime() : 0;
+      return timeB - timeA;
+    });
+  }
+
+  // Update Status and Metrics Indicators
+  const activeSubjectEl = document.getElementById('lbl-active-subject');
+  const activeSortEl = document.getElementById('lbl-active-sort');
+  const filteredCountEl = document.getElementById('lbl-filtered-count');
+  const totalCountEl = document.getElementById('lbl-total-count');
+
+  if (activeSubjectEl) activeSubjectEl.textContent = subjectFilter === 'all' ? 'All Subjects' : subjectFilter;
+  if (activeSortEl) {
+    activeSortEl.textContent = sortBy === 'highest_marks' ? 'Highest Marks'
+      : sortBy === 'lowest_marks' ? 'Lowest Marks'
+      : sortBy === 'highest_average' ? 'Highest Average'
+      : 'Default Order';
+  }
+  if (filteredCountEl) filteredCountEl.textContent = list.length;
+  if (totalCountEl) totalCountEl.textContent = rawSubmissionLogs.length;
+
+  tableBody.innerHTML = '';
+
+  if (list.length === 0) {
+    const filterMsg = subjectFilter !== 'all' ? ` for "${subjectFilter}"` : '';
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="8" class="text-center py-5 text-muted">
+          <i class="fa-solid fa-folder-open fs-3 d-block mb-2 text-secondary"></i>
+          <div>No candidate submissions found${filterMsg}.</div>
+          <button class="btn btn-sm btn-omnix-outline mt-2" onclick="resetTrackerFilters()">
+            <i class="fa-solid fa-rotate-left me-1"></i> Reset Filters
+          </button>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  list.forEach(log => {
+    const latest = log.latestAttempt;
+    const prev = log.previousAttempt;
+
+    // Latest Attempt Details (Marks)
+    let latestHtml = `<span class="text-muted">—</span>`;
+    if (latest) {
+      const latestDate = new Date(latest.timestamp).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      latestHtml = `
+        <div>
+          <span class="fw-bold ${latest.passed ? 'text-success' : 'text-danger'} font-monospace">
+            ${latest.score} / ${latest.totalQuestions} (${latest.percentage}%)
+          </span>
+          <div class="small text-muted" style="font-size: 0.76rem;">${latestDate}</div>
+        </div>
+      `;
+    }
+
+    // Previous Attempt Details
+    let prevHtml = `<span class="text-muted small fst-italic">None (First Attempt)</span>`;
+    if (prev) {
+      const prevDate = new Date(prev.timestamp).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      prevHtml = `
+        <div>
+          <span class="fw-bold ${prev.passed ? 'text-success' : 'text-danger'} font-monospace">
+            ${prev.score} / ${prev.totalQuestions} (${prev.percentage}%)
+          </span>
+          <div class="small text-muted" style="font-size: 0.76rem;">${prevDate}</div>
+        </div>
+      `;
+    }
+
+    // Overall Average Column
+    // Formula: Average = Total marks obtained / Number of subjects with valid marks
+    const avgData = log.candidateAverage || (allCandidateAverages[log.userId] || null);
+    let avgHtml = `<span class="text-muted small">—</span>`;
+    if (avgData && avgData.validSubjectsCount > 0) {
+      avgHtml = `
+        <div>
+          <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill font-monospace fw-bold">
+            Avg: ${avgData.averageMarks} / 5 (${avgData.averagePercentage}%)
+          </span>
+          <div class="small text-muted" style="font-size: 0.74rem;">
+            Across ${avgData.validSubjectsCount} subject${avgData.validSubjectsCount > 1 ? 's' : ''} (${avgData.totalMarks} total pts)
+          </div>
+        </div>
+      `;
+    } else if (latest) {
+      avgHtml = `
+        <div>
+          <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill font-monospace fw-bold">
+            Avg: ${latest.score} / ${latest.totalQuestions} (${latest.percentage}%)
+          </span>
+          <div class="small text-muted" style="font-size: 0.74rem;">1 subject</div>
+        </div>
+      `;
+    }
+
+    // Improvement Delta
+    let deltaBadge = '';
+    if (log.scoreImprovement !== null) {
+      if (log.scoreImprovement > 0) {
+        deltaBadge = `<span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill"><i class="fa-solid fa-arrow-up me-1"></i>+${log.scoreImprovement}%</span>`;
+      } else if (log.scoreImprovement < 0) {
+        deltaBadge = `<span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill"><i class="fa-solid fa-arrow-down me-1"></i>${log.scoreImprovement}%</span>`;
+      } else {
+        deltaBadge = `<span class="badge bg-light text-muted border rounded-pill">0% (Equal)</span>`;
+      }
+    } else {
+      deltaBadge = `<span class="badge bg-light text-muted border rounded-pill">N/A</span>`;
+    }
+
+    // Attempt Quota Badge
+    const quotaBadge = log.isMaxReached
+      ? `<span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill fw-bold">2 / 2 (MAX)</span>`
+      : `<span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill fw-bold">1 / 2</span>`;
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>
+        <div class="fw-bold text-heading">${log.userName}</div>
+        <div class="small text-muted">${log.userEmail}</div>
+      </td>
+      <td>
+        <span class="fw-semibold">${log.categoryName}${log.quizTitle ? ' (' + log.quizTitle + ')' : ''}</span>
+      </td>
+      <td>${quotaBadge}</td>
+      <td>${prevHtml}</td>
+      <td>${latestHtml}</td>
+      <td>${avgHtml}</td>
+      <td>${deltaBadge}</td>
+      <td class="text-end">
+        <button class="btn btn-omnix-outline btn-sm" onclick="openAttemptDetailsModal('${latest ? latest.id : ''}')" ${!latest ? 'disabled' : ''}>
+          <i class="fa-solid fa-file-lines me-1"></i> Inspect
+        </button>
+      </td>
+    `;
+    tableBody.appendChild(row);
+  });
 }
 
 async function openAttemptDetailsModal(attemptId) {

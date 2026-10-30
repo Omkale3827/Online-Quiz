@@ -224,8 +224,12 @@ const API = {
     return this.request('/admin/users');
   },
 
-  async getAdminAttempts() {
-    return this.request('/admin/attempts');
+  async getAdminAttempts(filterParams = {}) {
+    const params = new URLSearchParams();
+    if (filterParams.subject && filterParams.subject !== 'all') params.append('subject', filterParams.subject);
+    if (filterParams.sortBy && filterParams.sortBy !== 'default') params.append('sortBy', filterParams.sortBy);
+    const query = params.toString() ? `?${params.toString()}` : '';
+    return this.request(`/admin/attempts${query}`);
   },
 
   async resetDatabase() {

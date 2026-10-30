@@ -141,18 +141,85 @@
       </div>
     </div>
 
-    <!-- 2. Submission Tracker: Comparing Latest Attempt vs Previous Attempt -->
+    <!-- 2. Submission Tracker: Advanced Sorting & Filtering Controls -->
     <section class="mb-5">
-      <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
         <div>
           <h4 class="fw-bold mb-0">Candidate Submission Tracker</h4>
-          <span class="small text-muted">Tracking individual attempt budgets: <strong>Latest Attempt</strong> vs. <strong>Previous Attempt</strong> comparison</span>
+          <span class="small text-muted">Advanced filtering by domain, highest/lowest marks, and highest overall average</span>
         </div>
-        <span class="badge bg-secondary-subtle text-secondary border px-3 py-1.5 rounded-pill fw-semibold">
-          <i class="fa-solid fa-filter me-1"></i> Quota Engine Active (Max 2 Attempts)
-        </span>
+        <div class="d-flex align-items-center gap-2">
+          <span class="badge bg-secondary-subtle text-secondary border px-3 py-1.5 rounded-pill fw-semibold">
+            <i class="fa-solid fa-filter me-1"></i> Quota Engine Active (Max 2 Attempts)
+          </span>
+        </div>
       </div>
 
+      <!-- Advanced Filter & Sort Toolbar Card -->
+      <div class="omnix-card p-3 mb-3">
+        <div class="row g-3 align-items-end">
+          <!-- 1. Search Candidate Input -->
+          <div class="col-lg-4 col-md-6 col-12">
+            <label class="form-label small fw-bold text-muted mb-1">
+              <i class="fa-solid fa-magnifying-glass me-1 text-primary"></i> Search Candidate
+            </label>
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0"><i class="fa-solid fa-user text-muted"></i></span>
+              <input type="text" id="tracker-search-input" class="form-control form-control-omnix border-start-0" placeholder="Search by name or email..." oninput="handleTrackerFilterChange()">
+            </div>
+          </div>
+
+          <!-- 2. Subject Filter Dropdown -->
+          <div class="col-lg-3 col-md-6 col-12">
+            <label class="form-label small fw-bold text-muted mb-1">
+              <i class="fa-solid fa-book-open me-1 text-primary"></i> Subject Filter
+            </label>
+            <select id="tracker-subject-filter" class="form-select form-select-omnix" onchange="handleTrackerFilterChange()">
+              <option value="all">All Subjects (Complete List)</option>
+              <option value="General Knowledge">General Knowledge</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="Java Programming">Java Programming</option>
+              <option value="C Programming">C Programming</option>
+              <option value="Python">Python</option>
+              <option value="Web Development">Web Development</option>
+            </select>
+          </div>
+
+          <!-- 3. Sort By Dropdown -->
+          <div class="col-lg-3 col-md-6 col-12">
+            <label class="form-label small fw-bold text-muted mb-1">
+              <i class="fa-solid fa-arrow-down-short-wide me-1 text-warning"></i> Sort By
+            </label>
+            <select id="tracker-sort-by" class="form-select form-select-omnix" onchange="handleTrackerFilterChange()">
+              <option value="default">Default Order (Newest First)</option>
+              <option value="highest_marks">Highest Marks (Descending)</option>
+              <option value="lowest_marks">Lowest Marks (Ascending)</option>
+              <option value="highest_average">Highest Average (Best Overall)</option>
+            </select>
+          </div>
+
+          <!-- 4. Reset Filters Button -->
+          <div class="col-lg-2 col-md-6 col-12">
+            <button type="button" class="btn btn-omnix-outline w-100" id="btn-reset-tracker" onclick="resetTrackerFilters()">
+              <i class="fa-solid fa-rotate-left me-1"></i> Reset Filters
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Status & Metric Strip -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between pt-2.5 mt-3 border-top small text-muted">
+          <div>
+            Filter: <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-2.5 py-1" id="lbl-active-subject">All Subjects</span>
+            <span class="mx-1">•</span>
+            Sorting: <span class="badge bg-warning-subtle text-dark border border-warning-subtle rounded-pill px-2.5 py-1" id="lbl-active-sort">Default Order</span>
+          </div>
+          <div>
+            Showing <strong class="text-heading" id="lbl-filtered-count">0</strong> of <span id="lbl-total-count">0</span> submissions
+          </div>
+        </div>
+      </div>
+
+      <!-- Table Card with Candidate Average Column -->
       <div class="omnix-card p-0">
         <div class="table-responsive">
           <table class="table table-omnix mb-0">
@@ -162,14 +229,15 @@
                 <th>Quiz Domain</th>
                 <th>Attempt Quota</th>
                 <th>Previous Attempt</th>
-                <th>Latest Attempt</th>
+                <th>Latest Attempt (Marks)</th>
+                <th>Overall Average</th>
                 <th>Score Delta</th>
                 <th class="text-end">Action</th>
               </tr>
             </thead>
             <tbody id="admin-attempts-table-body">
               <tr>
-                <td colspan="7" class="text-center py-4 text-muted">Loading submission logs...</td>
+                <td colspan="8" class="text-center py-4 text-muted">Loading submission logs...</td>
               </tr>
             </tbody>
           </table>

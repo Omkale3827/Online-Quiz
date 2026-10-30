@@ -80,11 +80,50 @@ router.get('/users', (req, res) => {
   res.json(usersWithStats);
 });
 
-// GET /api/admin/attempts - Detailed user attempt tracker with Latest vs Previous Attempt
+// GET /api/admin/attempts - Detailed user attempt tracker with Latest vs Previous Attempt, Subject Filtering & Average Ranking
 router.get('/attempts', (req, res) => {
   const db = getDb();
+  const { subject, sortBy } = req.query;
   
-  // Group attempts by user and category to compare Latest vs Previous Attempt
+  // 1. Calculate each candidate's overall marks across all their attempted subjects
+  // Formula: Average = Total marks obtained / Number of subjects with valid marks
+  // For each candidate and unique subject, identify their latest attempt score
+  const userSubjectLatestScores = {}; // userId -> { categoryId: { score, percentage, timestamp } }
+  
+  db.attempts.forEach(attempt => {
+    const uid = attempt.userId;
+    const cid = attempt.categoryId;
+    if (!userSubjectLatestScores[uid]) {
+      userSubjectLatestScores[uid] = {};
+    }
+    const currentRecorded = userSubjectLatestScores[uid][cid];
+    if (!currentRecorded || new Date(attempt.timestamp) >= new Date(currentRecorded.timestamp)) {
+      userSubjectLatestScores[uid][cid] = {
+        score: attempt.score,
+        totalQuestions: attempt.totalQuestions,
+        percentage: attempt.percentage,
+        timestamp: attempt.timestamp
+      };
+    }
+  });
+
+  const candidateOverallAverages = {}; // userId -> { totalMarks, validSubjectsCount, averageMarks, averagePercentage }
+  Object.keys(userSubjectLatestScores).forEach(uid => {
+    const subjectsMap = userSubjectLatestScores[uid];
+    const subjectList = Object.values(subjectsMap);
+    const validSubjectsCount = subjectList.length;
+    const totalMarks = subjectList.reduce((sum, s) => sum + s.score, 0);
+    const totalPercentage = subjectList.reduce((sum, s) => sum + s.percentage, 0);
+
+    candidateOverallAverages[uid] = {
+      totalMarks,
+      validSubjectsCount,
+      averageMarks: validSubjectsCount > 0 ? parseFloat((totalMarks / validSubjectsCount).toFixed(2)) : 0,
+      averagePercentage: validSubjectsCount > 0 ? Math.round(totalPercentage / validSubjectsCount) : 0
+    };
+  });
+
+  // 2. Group attempts by user and quiz/category to compare Latest vs Previous Attempt
   const grouped = {};
 
   db.attempts.forEach(attempt => {
@@ -105,7 +144,7 @@ router.get('/attempts', (req, res) => {
   });
 
   // Transform each group into a tracker record with latest and previous attempt
-  const userQuizLogs = Object.values(grouped).map(group => {
+  let userQuizLogs = Object.values(grouped).map(group => {
     // Sort ascending by timestamp or attemptNumber
     group.attempts.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
@@ -127,6 +166,13 @@ router.get('/attempts', (req, res) => {
       scoreImprovement = latestAttempt.percentage - previousAttempt.percentage;
     }
 
+    const candidateAvg = candidateOverallAverages[group.userId] || {
+      totalMarks: latestAttempt ? latestAttempt.score : 0,
+      validSubjectsCount: latestAttempt ? 1 : 0,
+      averageMarks: latestAttempt ? latestAttempt.score : 0,
+      averagePercentage: latestAttempt ? latestAttempt.percentage : 0
+    };
+
     return {
       userId: group.userId,
       userName: group.userName,
@@ -139,15 +185,62 @@ router.get('/attempts', (req, res) => {
       isMaxReached: totalAttemptsMade >= 2,
       latestAttempt,
       previousAttempt,
-      scoreImprovement
+      scoreImprovement,
+      candidateAverage: candidateAvg
     };
   });
+
+  // Optional server-side filtering by subject
+  if (subject && subject !== 'all') {
+    userQuizLogs = userQuizLogs.filter(log => log.categoryName === subject || log.categoryId === subject);
+  }
+
+  // Optional server-side sorting
+  if (sortBy === 'highest_marks') {
+    userQuizLogs.sort((a, b) => {
+      const scoreA = a.latestAttempt ? a.latestAttempt.score : -1;
+      const scoreB = b.latestAttempt ? b.latestAttempt.score : -1;
+      if (scoreB !== scoreA) return scoreB - scoreA;
+      const pctA = a.latestAttempt ? a.latestAttempt.percentage : -1;
+      const pctB = b.latestAttempt ? b.latestAttempt.percentage : -1;
+      if (pctB !== pctA) return pctB - pctA;
+      return (a.userName || '').localeCompare(b.userName || '');
+    });
+  } else if (sortBy === 'lowest_marks') {
+    userQuizLogs.sort((a, b) => {
+      const scoreA = a.latestAttempt ? a.latestAttempt.score : 999;
+      const scoreB = b.latestAttempt ? b.latestAttempt.score : 999;
+      if (scoreA !== scoreB) return scoreA - scoreB;
+      const pctA = a.latestAttempt ? a.latestAttempt.percentage : 999;
+      const pctB = b.latestAttempt ? b.latestAttempt.percentage : 999;
+      if (pctA !== pctB) return pctA - pctB;
+      return (a.userName || '').localeCompare(b.userName || '');
+    });
+  } else if (sortBy === 'highest_average') {
+    userQuizLogs.sort((a, b) => {
+      const avgA = a.candidateAverage ? a.candidateAverage.averageMarks : 0;
+      const avgB = b.candidateAverage ? b.candidateAverage.averageMarks : 0;
+      if (avgB !== avgA) return avgB - avgA;
+      const pctA = a.candidateAverage ? a.candidateAverage.averagePercentage : 0;
+      const pctB = b.candidateAverage ? b.candidateAverage.averagePercentage : 0;
+      if (pctB !== pctA) return pctB - pctA;
+      return (a.userName || '').localeCompare(b.userName || '');
+    });
+  } else {
+    // Default: latest attempt timestamp descending
+    userQuizLogs.sort((a, b) => {
+      const timeA = a.latestAttempt ? new Date(a.latestAttempt.timestamp).getTime() : 0;
+      const timeB = b.latestAttempt ? new Date(b.latestAttempt.timestamp).getTime() : 0;
+      return timeB - timeA;
+    });
+  }
 
   // Also include chronological flat attempts list
   const flatAttempts = [...db.attempts].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
   res.json({
     userQuizLogs,
+    candidateOverallAverages,
     allAttempts: flatAttempts
   });
 });
